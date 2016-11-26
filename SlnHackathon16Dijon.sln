@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HCK_DAL", "HCK_DAL\HCK_DAL.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HCK_WebApp", "HCK_WebApp\HCK_WebApp.csproj", "{B3E9B5B4-0ECB-44A7-851D-22A41FE4EA2C}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "HCK_SQL", "HCK_SQL\HCK_SQL.sqlproj", "{38229A29-64F8-4870-9D4A-AD8644A25F8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HCK_TOOLS", "HCK_TOOLS\HCK_TOOLS.csproj", "{7F83F0FD-3209-4514-8C17-A98146247AD1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,16 @@ Global
 		{B3E9B5B4-0ECB-44A7-851D-22A41FE4EA2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3E9B5B4-0ECB-44A7-851D-22A41FE4EA2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3E9B5B4-0ECB-44A7-851D-22A41FE4EA2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38229A29-64F8-4870-9D4A-AD8644A25F8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38229A29-64F8-4870-9D4A-AD8644A25F8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38229A29-64F8-4870-9D4A-AD8644A25F8F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{38229A29-64F8-4870-9D4A-AD8644A25F8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38229A29-64F8-4870-9D4A-AD8644A25F8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38229A29-64F8-4870-9D4A-AD8644A25F8F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{7F83F0FD-3209-4514-8C17-A98146247AD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F83F0FD-3209-4514-8C17-A98146247AD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F83F0FD-3209-4514-8C17-A98146247AD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F83F0FD-3209-4514-8C17-A98146247AD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
