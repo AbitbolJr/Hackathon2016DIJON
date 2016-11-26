@@ -22,3 +22,71 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+/* Css perso */
+
+.contentGroup
+{
+    margin:20px;
+}
+
+.labarnav
+{
+    background-color:#1f6dd3;
+    color:white;
+}
+
+.navbar-brand
+{
+    color:white;
+}
+
+
+.text-red
+{
+    color: darkred;
+}
+
+.panel-orange
+{
+    background-color:orange;
+    color:white;
+}
+
+.text-white
+{
+    color:white;
+}
+
+.text-gray
+{
+    color:gray;
+}
+
+.text-orange
+{
+    color:orange;
+}
+
+
+.set
+{
+    color: #5cb85c;
+}
+
+li:hover
+{
+    cursor:pointer;
+}
+
+.floatLeft
+{
+    float: left;
+}
+
+.floatRight
+{
+    float: right;
+}
+

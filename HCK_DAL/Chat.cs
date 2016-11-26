@@ -12,15 +12,15 @@ namespace HCK_DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class Inscription
+    public partial class Chat
     {
-        public int idUtilisateur { get; set; }
-        public int idVoyage { get; set; }
-        public Nullable<bool> estHebdomadaire { get; set; }
-        public Nullable<bool> estQuotidien { get; set; }
-        public Nullable<int> wagon { get; set; }
+        public int idMessage { get; set; }
+        public Nullable<int> idExpediteur { get; set; }
+        public Nullable<int> idDestinataire { get; set; }
+        public Nullable<System.DateTime> dateEnvoi { get; set; }
+        public string message { get; set; }
     
         public virtual Utilisateur Utilisateur { get; set; }
-        public virtual Voyage Voyage { get; set; }
+        public virtual Utilisateur Utilisateur1 { get; set; }
     }
 }

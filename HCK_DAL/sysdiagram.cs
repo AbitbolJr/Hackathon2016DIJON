@@ -12,15 +12,12 @@ namespace HCK_DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class Inscription
+    public partial class sysdiagram
     {
-        public int idUtilisateur { get; set; }
-        public int idVoyage { get; set; }
-        public Nullable<bool> estHebdomadaire { get; set; }
-        public Nullable<bool> estQuotidien { get; set; }
-        public Nullable<int> wagon { get; set; }
-    
-        public virtual Utilisateur Utilisateur { get; set; }
-        public virtual Voyage Voyage { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

@@ -58,6 +58,9 @@
     <Compile Include="Categorie.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Chat.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Inscription.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

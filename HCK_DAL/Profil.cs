@@ -23,7 +23,7 @@ namespace HCK_DAL
         public int idProfil { get; set; }
         public string prenom { get; set; }
         public string nom { get; set; }
-        public string dateDeNaissance { get; set; }
+        public Nullable<System.DateTime> dateDeNaissance { get; set; }
         public string fonction { get; set; }
         public string entreprise { get; set; }
         public string descriptionPro { get; set; }

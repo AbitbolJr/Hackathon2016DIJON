@@ -1,6 +1,6 @@
 ﻿USE [Hackathon16Dijon]
 GO
-/****** Object:  Table [dbo].[Annonce]    Script Date: 26/11/2016 09:26:13 ******/
+/****** Object:  Table [dbo].[Annonce]    Script Date: 26/11/2016 12:27:48 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -21,7 +21,7 @@ CREATE TABLE [dbo].[Annonce](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Categorie]    Script Date: 26/11/2016 09:26:14 ******/
+/****** Object:  Table [dbo].[Categorie]    Script Date: 26/11/2016 12:27:48 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -36,20 +36,25 @@ CREATE TABLE [dbo].[Categorie](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Chat]    Script Date: 26/11/2016 09:26:14 ******/
+/****** Object:  Table [dbo].[Chat]    Script Date: 26/11/2016 12:27:48 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Chat](
+	[idMessage] [int] IDENTITY(1,1) NOT NULL,
 	[idExpediteur] [int] NULL,
 	[idDestinataire] [int] NULL,
-	[dateEnvoi] [nvarchar](50) NULL,
-	[message] [nvarchar](250) NULL
+	[dateEnvoi] [datetime] NULL,
+	[message] [nvarchar](250) NULL,
+ CONSTRAINT [PK_Chat] PRIMARY KEY CLUSTERED 
+(
+	[idMessage] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Inscription]    Script Date: 26/11/2016 09:26:14 ******/
+/****** Object:  Table [dbo].[Inscription]    Script Date: 26/11/2016 12:27:48 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -59,6 +64,7 @@ CREATE TABLE [dbo].[Inscription](
 	[idVoyage] [int] NOT NULL,
 	[estHebdomadaire] [bit] NULL,
 	[estQuotidien] [bit] NULL,
+	[wagon] [int] NULL,
  CONSTRAINT [PK_Inscription] PRIMARY KEY CLUSTERED 
 (
 	[idUtilisateur] ASC,
@@ -67,7 +73,7 @@ CREATE TABLE [dbo].[Inscription](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Profil]    Script Date: 26/11/2016 09:26:14 ******/
+/****** Object:  Table [dbo].[Profil]    Script Date: 26/11/2016 12:27:48 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -76,7 +82,7 @@ CREATE TABLE [dbo].[Profil](
 	[idProfil] [int] IDENTITY(1,1) NOT NULL,
 	[prenom] [nvarchar](50) NULL,
 	[nom] [nvarchar](50) NULL,
-	[dateDeNaissance] [nvarchar](50) NULL,
+	[dateDeNaissance] [datetime] NULL,
 	[fonction] [nvarchar](50) NULL,
 	[entreprise] [nvarchar](50) NULL,
 	[descriptionPro] [nvarchar](250) NULL,
@@ -90,7 +96,7 @@ CREATE TABLE [dbo].[Profil](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Utilisateur]    Script Date: 26/11/2016 09:26:14 ******/
+/****** Object:  Table [dbo].[Utilisateur]    Script Date: 26/11/2016 12:27:48 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -107,7 +113,7 @@ CREATE TABLE [dbo].[Utilisateur](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Voyage]    Script Date: 26/11/2016 09:26:14 ******/
+/****** Object:  Table [dbo].[Voyage]    Script Date: 26/11/2016 12:27:48 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -116,8 +122,9 @@ CREATE TABLE [dbo].[Voyage](
 	[idVoyage] [int] IDENTITY(1,1) NOT NULL,
 	[depart] [nvarchar](50) NULL,
 	[arrivee] [nvarchar](50) NULL,
-	[date] [nvarchar](50) NULL,
-	[horaire] [nvarchar](50) NULL,
+	[date] [datetime] NULL,
+	[horaireArrivee] [time](7) NULL,
+	[horaireDepart] [time](7) NULL,
 	[numeroTrain] [int] NULL,
 	[nbWagon] [int] NULL,
  CONSTRAINT [PK_Voyage] PRIMARY KEY CLUSTERED 
