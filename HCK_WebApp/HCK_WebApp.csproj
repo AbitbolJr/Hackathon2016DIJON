@@ -156,6 +156,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AnnounceController.cs" />
     <Compile Include="Controllers\AuthentificationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\VoyageController.cs" />
@@ -163,6 +164,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AddVoyageVM.cs" />
+    <Compile Include="Models\AnnounceVM.cs" />
     <Compile Include="Models\GetTrainListVM.cs" />
     <Compile Include="Models\UserEditProfilVM.cs" />
     <Compile Include="Models\UserLogInVM.cs" />
@@ -212,6 +214,9 @@
     <Content Include="Views\Authentification\EditProfil.cshtml" />
     <Content Include="Views\Voyage\AddVoyage.cshtml" />
     <Content Include="Views\Voyage\GetTrainList.cshtml" />
+    <Content Include="Views\Announce\AddAnnounce.cshtml" />
+    <Content Include="Views\Announce\EditAnnounce.cshtml" />
+    <Content Include="Views\Announce\GetAllAnnounces.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

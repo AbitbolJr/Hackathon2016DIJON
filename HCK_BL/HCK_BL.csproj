@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnnounceBL.cs" />
+    <Compile Include="CategorieBL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="InscriptionBL.cs" />
     <Compile Include="UserBL.cs" />
