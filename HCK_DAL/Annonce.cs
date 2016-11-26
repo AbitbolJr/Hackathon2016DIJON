@@ -14,6 +14,12 @@ namespace HCK_DAL
     
     public partial class Annonce
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Annonce()
+        {
+            this.Adhesions = new HashSet<Adhesion>();
+        }
+    
         public int idAnnonce { get; set; }
         public Nullable<int> idCategorie { get; set; }
         public string titre { get; set; }
@@ -25,5 +31,7 @@ namespace HCK_DAL
     
         public virtual Categorie Categorie { get; set; }
         public virtual Utilisateur Utilisateur { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Adhesion> Adhesions { get; set; }
     }
 }
