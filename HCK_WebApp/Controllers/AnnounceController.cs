@@ -44,16 +44,16 @@ namespace HCK_WebApp.Controllers
             {
                 if (Request.Cookies["Hackathon"] != null)
                 {
-                    pAnnounce.idUtilisateur = Convert.ToInt32(Request.Cookies["Hackathon"]["IdUser"]);
+                    pAnnounce.idUtilisateur =  Convert.ToInt32(Request.Cookies["Hackathon"]["IdUser"]);
                     Annonce newAnnounce = new Annonce()
                     {
                         description = pAnnounce.description,
-                        estActive = pAnnounce.estActive,
+                        estActive = true,
                         idAnnonce = Convert.ToInt16(pAnnounce.idAnnonce),
                         idCategorie = pAnnounce.idCategorie,
                         idUtilisateur = pAnnounce.idUtilisateur,
                         nbSlot = pAnnounce.nbSlot,
-                        nbSlotUtilise = pAnnounce.nbSlotUtilise,
+                        nbSlotUtilise = 1,
                         titre = pAnnounce.titre
                     };
 
