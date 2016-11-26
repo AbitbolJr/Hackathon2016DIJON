@@ -19,6 +19,8 @@ namespace HCK_DAL
         {
             this.Annonces = new HashSet<Annonce>();
             this.Inscriptions = new HashSet<Inscription>();
+            this.Chats = new HashSet<Chat>();
+            this.Chats1 = new HashSet<Chat>();
         }
     
         public int idUtilisateur { get; set; }
@@ -31,5 +33,9 @@ namespace HCK_DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Inscription> Inscriptions { get; set; }
         public virtual Profil Profil { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Chat> Chats { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Chat> Chats1 { get; set; }
     }
 }

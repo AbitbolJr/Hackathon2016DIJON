@@ -31,5 +31,6 @@ namespace HCK_DAL
         public virtual DbSet<Profil> Profils { get; set; }
         public virtual DbSet<Utilisateur> Utilisateurs { get; set; }
         public virtual DbSet<Voyage> Voyages { get; set; }
+        public virtual DbSet<Chat> Chats { get; set; }
     }
 }

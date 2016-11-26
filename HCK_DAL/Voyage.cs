@@ -23,8 +23,9 @@ namespace HCK_DAL
         public int idVoyage { get; set; }
         public string depart { get; set; }
         public string arrivee { get; set; }
-        public string date { get; set; }
-        public string horaire { get; set; }
+        public Nullable<System.DateTime> date { get; set; }
+        public Nullable<System.TimeSpan> horaireArrivee { get; set; }
+        public Nullable<System.TimeSpan> horaireDepart { get; set; }
         public Nullable<int> numeroTrain { get; set; }
         public Nullable<int> nbWagon { get; set; }
     

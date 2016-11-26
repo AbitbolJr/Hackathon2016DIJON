@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Hackathon16DijonModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Hackathon16DijonModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Annonce">
           <Key>
             <PropertyRef Name="idAnnonce" />
@@ -25,14 +25,16 @@
           <Property Name="idCategorie" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="libelle" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'Hackathon16Dijon.dbo.Chat' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
         <EntityType Name="Chat">
+          <Key>
+            <PropertyRef Name="idMessage" />
+          </Key>
+          <Property Name="idMessage" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idExpediteur" Type="int" />
           <Property Name="idDestinataire" Type="int" />
-          <Property Name="dateEnvoi" Type="nvarchar" MaxLength="50" />
+          <Property Name="dateEnvoi" Type="datetime" />
           <Property Name="message" Type="nvarchar" MaxLength="250" />
-        </EntityType>-->
+        </EntityType>
         <EntityType Name="Inscription">
           <Key>
             <PropertyRef Name="idUtilisateur" />
@@ -42,6 +44,7 @@ warning 6013: The table/view 'Hackathon16Dijon.dbo.Chat' does not have a primary
           <Property Name="idVoyage" Type="int" Nullable="false" />
           <Property Name="estHebdomadaire" Type="bit" />
           <Property Name="estQuotidien" Type="bit" />
+          <Property Name="wagon" Type="int" />
         </EntityType>
         <EntityType Name="Profil">
           <Key>
@@ -50,7 +53,7 @@ warning 6013: The table/view 'Hackathon16Dijon.dbo.Chat' does not have a primary
           <Property Name="idProfil" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="prenom" Type="nvarchar" MaxLength="50" />
           <Property Name="nom" Type="nvarchar" MaxLength="50" />
-          <Property Name="dateDeNaissance" Type="nvarchar" MaxLength="50" />
+          <Property Name="dateDeNaissance" Type="datetime" />
           <Property Name="fonction" Type="nvarchar" MaxLength="50" />
           <Property Name="entreprise" Type="nvarchar" MaxLength="50" />
           <Property Name="descriptionPro" Type="nvarchar" MaxLength="250" />
@@ -74,8 +77,9 @@ warning 6013: The table/view 'Hackathon16Dijon.dbo.Chat' does not have a primary
           <Property Name="idVoyage" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="depart" Type="nvarchar" MaxLength="50" />
           <Property Name="arrivee" Type="nvarchar" MaxLength="50" />
-          <Property Name="date" Type="nvarchar" MaxLength="50" />
-          <Property Name="horaire" Type="nvarchar" MaxLength="50" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="horaireArrivee" Type="time" Precision="7" />
+          <Property Name="horaireDepart" Type="time" Precision="7" />
           <Property Name="numeroTrain" Type="int" />
           <Property Name="nbWagon" Type="int" />
         </EntityType>
@@ -103,12 +107,30 @@ warning 6013: The table/view 'Hackathon16Dijon.dbo.Chat' does not have a primary
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-error 6004: The table 'Hackathon16Dijon.dbo.Chat' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_Chat_Utilisateur" />-->
-        <!--Errors Found During Generation:
-error 6004: The table 'Hackathon16Dijon.dbo.Chat' is referenced by a relationship, but cannot be found.
-        <Association Name="FK_Chat_Utilisateur1" />-->
+        <Association Name="FK_Chat_Utilisateur">
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="0..1" />
+          <End Role="Chat" Type="Self.Chat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="idUtilisateur" />
+            </Principal>
+            <Dependent Role="Chat">
+              <PropertyRef Name="idExpediteur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Chat_Utilisateur1">
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="0..1" />
+          <End Role="Chat" Type="Self.Chat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="idUtilisateur" />
+            </Principal>
+            <Dependent Role="Chat">
+              <PropertyRef Name="idDestinataire" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Inscription_Utilisateur">
           <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="1" />
           <End Role="Inscription" Type="Self.Inscription" Multiplicity="*" />
@@ -148,6 +170,7 @@ error 6004: The table 'Hackathon16Dijon.dbo.Chat' is referenced by a relationshi
         <EntityContainer Name="Hackathon16DijonModelStoreContainer">
           <EntitySet Name="Annonce" EntityType="Self.Annonce" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categorie" EntityType="Self.Categorie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Chat" EntityType="Self.Chat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Inscription" EntityType="Self.Inscription" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profil" EntityType="Self.Profil" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Utilisateur" EntityType="Self.Utilisateur" Schema="dbo" store:Type="Tables" />
@@ -159,6 +182,14 @@ error 6004: The table 'Hackathon16Dijon.dbo.Chat' is referenced by a relationshi
           <AssociationSet Name="FK_Annonce_Utilisateur" Association="Self.FK_Annonce_Utilisateur">
             <End Role="Utilisateur" EntitySet="Utilisateur" />
             <End Role="Annonce" EntitySet="Annonce" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Chat_Utilisateur" Association="Self.FK_Chat_Utilisateur">
+            <End Role="Utilisateur" EntitySet="Utilisateur" />
+            <End Role="Chat" EntitySet="Chat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Chat_Utilisateur1" Association="Self.FK_Chat_Utilisateur1">
+            <End Role="Utilisateur" EntitySet="Utilisateur" />
+            <End Role="Chat" EntitySet="Chat" />
           </AssociationSet>
           <AssociationSet Name="FK_Inscription_Utilisateur" Association="Self.FK_Inscription_Utilisateur">
             <End Role="Utilisateur" EntitySet="Utilisateur" />
@@ -173,8 +204,7 @@ error 6004: The table 'Hackathon16Dijon.dbo.Chat' is referenced by a relationshi
             <End Role="Utilisateur" EntitySet="Utilisateur" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Hackathon16DijonModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -212,6 +242,7 @@ error 6004: The table 'Hackathon16Dijon.dbo.Chat' is referenced by a relationshi
           <Property Name="estQuotidien" Type="Boolean" />
           <NavigationProperty Name="Utilisateur" Relationship="Self.FK_Inscription_Utilisateur" FromRole="Inscription" ToRole="Utilisateur" />
           <NavigationProperty Name="Voyage" Relationship="Self.FK_Inscription_Voyage" FromRole="Inscription" ToRole="Voyage" />
+          <Property Name="wagon" Type="Int32" />
         </EntityType>
         <EntityType Name="Profil">
           <Key>
@@ -220,7 +251,7 @@ error 6004: The table 'Hackathon16Dijon.dbo.Chat' is referenced by a relationshi
           <Property Name="idProfil" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="prenom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="nom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="dateDeNaissance" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="dateDeNaissance" Type="DateTime" Precision="3" />
           <Property Name="fonction" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="entreprise" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="descriptionPro" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
@@ -240,6 +271,8 @@ error 6004: The table 'Hackathon16Dijon.dbo.Chat' is referenced by a relationshi
           <NavigationProperty Name="Annonces" Relationship="Self.FK_Annonce_Utilisateur" FromRole="Utilisateur" ToRole="Annonce" />
           <NavigationProperty Name="Inscriptions" Relationship="Self.FK_Inscription_Utilisateur" FromRole="Utilisateur" ToRole="Inscription" />
           <NavigationProperty Name="Profil" Relationship="Self.FK_Utilisateur_Profil" FromRole="Utilisateur" ToRole="Profil" />
+          <NavigationProperty Name="Chats" Relationship="Hackathon16DijonModel.FK_Chat_Utilisateur" FromRole="Utilisateur" ToRole="Chat" />
+          <NavigationProperty Name="Chats1" Relationship="Hackathon16DijonModel.FK_Chat_Utilisateur1" FromRole="Utilisateur" ToRole="Chat" />
         </EntityType>
         <EntityType Name="Voyage">
           <Key>
@@ -248,8 +281,9 @@ error 6004: The table 'Hackathon16Dijon.dbo.Chat' is referenced by a relationshi
           <Property Name="idVoyage" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="depart" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="arrivee" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="horaire" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="horaireArrivee" Type="Time" Precision="7" />
+          <Property Name="horaireDepart" Type="Time" Precision="7" />
           <Property Name="numeroTrain" Type="Int32" />
           <Property Name="nbWagon" Type="Int32" />
           <NavigationProperty Name="Inscriptions" Relationship="Self.FK_Inscription_Voyage" FromRole="Voyage" ToRole="Inscription" />
@@ -341,7 +375,52 @@ error 6004: The table 'Hackathon16Dijon.dbo.Chat' is referenced by a relationshi
             <End Role="Profil" EntitySet="Profils" />
             <End Role="Utilisateur" EntitySet="Utilisateurs" />
           </AssociationSet>
+          <EntitySet Name="Chats" EntityType="Hackathon16DijonModel.Chat" />
+          <AssociationSet Name="FK_Chat_Utilisateur" Association="Hackathon16DijonModel.FK_Chat_Utilisateur">
+            <End Role="Utilisateur" EntitySet="Utilisateurs" />
+            <End Role="Chat" EntitySet="Chats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Chat_Utilisateur1" Association="Hackathon16DijonModel.FK_Chat_Utilisateur1">
+            <End Role="Utilisateur" EntitySet="Utilisateurs" />
+            <End Role="Chat" EntitySet="Chats" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Chat">
+          <Key>
+            <PropertyRef Name="idMessage" />
+          </Key>
+          <Property Name="idMessage" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idExpediteur" Type="Int32" />
+          <Property Name="idDestinataire" Type="Int32" />
+          <Property Name="dateEnvoi" Type="DateTime" Precision="3" />
+          <Property Name="message" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Utilisateur" Relationship="Hackathon16DijonModel.FK_Chat_Utilisateur" FromRole="Chat" ToRole="Utilisateur" />
+          <NavigationProperty Name="Utilisateur1" Relationship="Hackathon16DijonModel.FK_Chat_Utilisateur1" FromRole="Chat" ToRole="Utilisateur" />
+        </EntityType>
+        <Association Name="FK_Chat_Utilisateur">
+          <End Type="Hackathon16DijonModel.Utilisateur" Role="Utilisateur" Multiplicity="0..1" />
+          <End Type="Hackathon16DijonModel.Chat" Role="Chat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="idUtilisateur" />
+            </Principal>
+            <Dependent Role="Chat">
+              <PropertyRef Name="idExpediteur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Chat_Utilisateur1">
+          <End Type="Hackathon16DijonModel.Utilisateur" Role="Utilisateur" Multiplicity="0..1" />
+          <End Type="Hackathon16DijonModel.Chat" Role="Chat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="idUtilisateur" />
+            </Principal>
+            <Dependent Role="Chat">
+              <PropertyRef Name="idDestinataire" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -373,6 +452,7 @@ error 6004: The table 'Hackathon16Dijon.dbo.Chat' is referenced by a relationshi
           <EntitySetMapping Name="Inscriptions">
             <EntityTypeMapping TypeName="Hackathon16DijonModel.Inscription">
               <MappingFragment StoreEntitySet="Inscription">
+                <ScalarProperty Name="wagon" ColumnName="wagon" />
                 <ScalarProperty Name="idUtilisateur" ColumnName="idUtilisateur" />
                 <ScalarProperty Name="idVoyage" ColumnName="idVoyage" />
                 <ScalarProperty Name="estHebdomadaire" ColumnName="estHebdomadaire" />
@@ -413,9 +493,21 @@ error 6004: The table 'Hackathon16Dijon.dbo.Chat' is referenced by a relationshi
                 <ScalarProperty Name="depart" ColumnName="depart" />
                 <ScalarProperty Name="arrivee" ColumnName="arrivee" />
                 <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="horaire" ColumnName="horaire" />
+                <ScalarProperty Name="horaireArrivee" ColumnName="horaireArrivee" />
+                <ScalarProperty Name="horaireDepart" ColumnName="horaireDepart" />
                 <ScalarProperty Name="numeroTrain" ColumnName="numeroTrain" />
                 <ScalarProperty Name="nbWagon" ColumnName="nbWagon" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Chats">
+            <EntityTypeMapping TypeName="Hackathon16DijonModel.Chat">
+              <MappingFragment StoreEntitySet="Chat">
+                <ScalarProperty Name="message" ColumnName="message" />
+                <ScalarProperty Name="dateEnvoi" ColumnName="dateEnvoi" />
+                <ScalarProperty Name="idDestinataire" ColumnName="idDestinataire" />
+                <ScalarProperty Name="idExpediteur" ColumnName="idExpediteur" />
+                <ScalarProperty Name="idMessage" ColumnName="idMessage" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
