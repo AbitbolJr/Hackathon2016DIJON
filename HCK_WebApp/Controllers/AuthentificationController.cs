@@ -11,11 +11,11 @@ namespace HCK_WebApp.Controllers
 {
     public class AuthentificationController : Controller
     {
-        private BaseDA context;
+        private UserBL context;
 
         public AuthentificationController()
         {
-            context = new BaseDA();
+            context = new UserBL();
         }
 
         public ActionResult LogIn()
@@ -28,46 +28,65 @@ namespace HCK_WebApp.Controllers
         [HttpPost]
         public ActionResult LogIn(UserLogInVM model)
         {
-            //var user = context.LogIn(model.Login, model.Password, context);
+            Utilisateur user = context.LogIn(model.Login, model.Password);
 
-            //if (user != null)
-            //{
-            //    Response.Cookies["Miniblog2"]["IdUser"] = user.IdUser.ToString();
-            //    Response.Cookies["Miniblog2"]["Token"] = user.Token;
-            //    Response.Cookies["Miniblog2"]["Name"] = user.DisplayName;
-            //    Response.Cookies["Miniblog2"].Expires = DateTime.UtcNow.AddDays(14);
+            if (user != null)
+            {
+                Response.Cookies["Hackathon"]["IdUser"] = user.idUtilisateur.ToString();
+                Response.Cookies["Hackathon"]["Name"] = user.Profil.prenom;
+                Response.Cookies["Hackathon"].Expires = DateTime.UtcNow.AddDays(14);
 
-            //    return RedirectToAction("Index", "Post");
-            //}
-            //model.Errors = context.Errors;
+                return RedirectToAction("Index", "Post");
+            }
 
             return View(model);
         }
 
         public ActionResult LogOut()
         {
-
-            Response.Cookies["Miniblog2"].Expires = DateTime.UtcNow.AddDays(-1);
+            Response.Cookies["Hackathon"].Expires = DateTime.UtcNow.AddDays(-1);
 
             return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Register()
         {
-            return View();
+            var model = new UserRegisterVM();
+
+            return View(model);
         }
 
         [HttpPost]
         public ActionResult Register(UserRegisterVM model)
         {
-            //var result = this.context.Register(model.User, context);
+            var result = this.context.Register(model.adresseMail, model.motDePasse, model.prenom, model.nom, model.dateDeNaissance); 
+                //model.fonction, model.entreprise, model.descriptionPro, model.descriptionLoisir, model.actifLoisir, model.actifPro);
 
-            //if (result)
-            //{
-            //    return RedirectToAction("Login", "Account");
-            //}
+            if (result)
+            {
+                return RedirectToAction("Login", "Account");
+            }
 
-            //model.Errors = context.Errors;
+            return View(model);
+        }
+
+        public ActionResult EditProfil()
+        {
+            var model = new UserEditProfilVM();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult EditProfil(UserEditProfilVM model)
+        {
+            var result = context.EditProfil(model.adresseMail, model.motDePasse, model.prenom, model.nom, model.dateDeNaissance, model.fonction,
+                model.entreprise, model.descriptionPro, model.descriptionLoisir, model.actifLoisir, model.actifPro);
+
+            if (result)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
             return View(model);
         }

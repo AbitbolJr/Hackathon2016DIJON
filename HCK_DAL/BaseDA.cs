@@ -34,7 +34,7 @@ namespace HCK_DAL
                     throw new ArgumentNullException("Impossible d'insérer un objet null");
                 }
 
-                if (predicat != null)
+                if (predicat != null) 
                 {
                     context.Set<T>().AddOrUpdate(predicat, entity);
                 }

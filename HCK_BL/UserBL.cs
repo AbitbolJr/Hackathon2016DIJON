@@ -1,5 +1,6 @@
 ﻿using HCK_BL;
 using HCK_DAL;
+using HCK_TOOLS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,37 +18,116 @@ namespace HCK_BL
             context = new BaseDA();
         }
 
-        public bool LogIn(string pLogin, string pPassword)
+        public Utilisateur LogIn(string pLogin, string pPassword)
         {
-            bool result = false;
+            Utilisateur user = new Utilisateur();
 
             try
             {
-                Utilisateur user = context.GetAll<Utilisateur>()
+                user = context.GetAll<Utilisateur>()
                     .Where(u => u.adresseMail == pLogin && u.motDePasse == pPassword)
                     .FirstOrDefault();
-
-                if (user != null)
-                {
-                    result = true;
-                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Log.WriteLog(ex);
             }
 
-            return result;
+            return user;
         }
 
-        public bool Register(string pMail, string pPassword)
+        public bool Register(string pLogin, string pPassword, string pPrenom, string pNom, string pDateNaissance)
         {
-            if (true)
+            try
             {
+                if (String.IsNullOrEmpty(pPrenom))
+                {
+                    throw new Exception("Veuillez renseigner un prénom");
+                }
 
+                if (String.IsNullOrEmpty(pDateNaissance))
+                {
+                    throw new Exception("Veuillez renseigner une date de naissance");
+                }
+
+                context.AddOrUpdate(new Profil()
+                {
+                    prenom = pPrenom,
+                    nom = pNom,
+                    dateDeNaissance = pDateNaissance
+                }, p => p.idProfil);
+
+                context.AddOrUpdate(new Utilisateur()
+                {
+                    motDePasse = pPassword,
+                    adresseMail = pLogin,
+                    idProfil = context.GetAll<Profil>().Max(p => p.idProfil)
+                });
+            }
+            catch (Exception ex)
+            {
+                Log.WriteLog(ex);
+                return false;
             }
 
-            return false;
+            return true;
+        }
+
+        public bool EditProfil(string pLogin, string pPassword, string pPrenom, string pNom, string pDateNaissance, string pFonction, string pEntreprise,
+            string pDescriptionPro, string pDescriptionLoisir, bool pActifLoisir, bool pActifPro)
+        {
+            try
+            {
+                if (String.IsNullOrEmpty(pPrenom))
+                {
+                    throw new Exception("Veuillez renseigner un prénom");
+                }
+
+                if (String.IsNullOrEmpty(pDateNaissance))
+                {
+                    throw new Exception("Veuillez renseigner une date de naissance");
+                }
+
+                if (pActifPro)
+                {
+                    if (String.IsNullOrEmpty(pFonction))
+                    {
+                        throw new Exception("Veuillez renseigner une fonction");
+                    }
+
+                    if (String.IsNullOrEmpty(pEntreprise))
+                    {
+                        throw new Exception("Veuillez renseigner une entreprise");
+                    }
+                }
+
+                context.AddOrUpdate(new Profil()
+                {
+                    prenom = pPrenom,
+                    nom = pNom,
+                    dateDeNaissance = pDateNaissance,
+                    actifLoisir = pActifLoisir,
+                    actifPro = pActifPro,
+                    descriptionLoisir = pDescriptionLoisir,
+                    descriptionPro = pDescriptionPro,
+                    entreprise = pEntreprise,
+                    fonction = pFonction,
+                }, p => p.idProfil);
+
+                context.AddOrUpdate(new Utilisateur()
+                {
+                    motDePasse = pPassword,
+                    adresseMail = pLogin,
+                    idProfil = context.GetAll<Profil>().Max(p => p.idProfil)
+                });
+            }
+            catch (Exception ex)
+            {
+                Log.WriteLog(ex);
+                return false;
+            }
+
+            return true;
         }
     }
 }

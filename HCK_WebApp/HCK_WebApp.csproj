@@ -161,6 +161,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserEditProfilVM.cs" />
     <Compile Include="Models\UserLogInVM.cs" />
     <Compile Include="Models\UserRegisterVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -205,10 +206,12 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Authentification\LogIn.cshtml" />
+    <Content Include="Views\Authentification\Register.cshtml" />
+    <Content Include="Views\Authentification\EditProfil.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Authentification\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
