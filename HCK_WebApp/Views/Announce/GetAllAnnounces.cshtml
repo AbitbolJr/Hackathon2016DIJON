@@ -1,0 +1,65 @@
+﻿@model IEnumerable<HCK_DAL.Annonce>
+
+@{
+    ViewBag.Title = "List Announces";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ListAnnounces</h2>
+
+<p>
+    @Html.ActionLink("Create New", "AddAnnounce")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Titre
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Nb de personnes meximum : 
+        </th>
+        <th>
+            Combien de personnes par défaut :
+        </th>
+        <th>
+            Active
+        </th>
+        <th>
+            Catégorie
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.titre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nbSlot)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nbSlotUtilise)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.estActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categorie.libelle)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditAnnounce", new { id = item.idAnnonce }) |
+                @*@Html.ActionLink("Details", "Details", new { id=item.idAnnonce }) |*@
+                @Html.ActionLink("Delete", "DeleteAnnounce", new { id = item.idAnnonce })
+            </td>
+        </tr>
+    }
+
+</table>
