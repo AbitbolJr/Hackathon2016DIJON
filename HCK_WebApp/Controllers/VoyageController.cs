@@ -56,10 +56,10 @@ namespace HCK_WebApp.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public ActionResult GetTrainList(GetTrainListVM model)
-        {
+        //[HttpPost]
+        //public ActionResult GetTrainList(GetTrainListVM model)
+        //{
 
-        }
+        //}
     }
 }
