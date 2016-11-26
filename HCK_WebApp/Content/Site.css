@@ -1,4 +1,27 @@
-﻿body {
+﻿/* Modification bootstrap */
+.navbar-collapse.collapse {
+  display: block!important;
+}
+
+.navbar-nav>li, .navbar-nav {
+  float: left !important;
+}
+
+.navbar-nav.navbar-right:last-child {
+  margin-right: -15px !important;
+}
+
+.navbar-right {
+  float: right!important;
+}
+
+a{
+    text-decoration: none!important;
+}
+
+
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -90,3 +113,53 @@ li:hover
     float: right;
 }
 
+
+/*a.btnChat
+{
+     background: url(../Images/image.gif) no-repeat top left;
+     display: block;
+     width: 10px;
+     height: 10px;
+     text-indent: -9999px;
+}*/
+
+
+.colorHeader{
+    background-color:black;
+}
+
+
+
+.navbar-brand
+{
+    padding-left:30px !important;
+}
+
+.btnMesAnnoncesIndex
+{
+    background-color :red;
+}
+.btnMonProfilIndex
+{
+    background-color :green;
+}
+
+
+.blockMenu{
+    margin:10px 0;
+    color:white;
+    text-align: center;
+    line-height: 150px;
+    vertical-align: middle;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.blockMenu:active{
+    background-color :blue;
+}
+
+
+footer{
+    text-align:center;
+}

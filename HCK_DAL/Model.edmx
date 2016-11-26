@@ -5,6 +5,15 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Hackathon16DijonModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Adhesion">
+          <Key>
+            <PropertyRef Name="idAnnonce" />
+            <PropertyRef Name="idUtilisateur" />
+          </Key>
+          <Property Name="idAnnonce" Type="int" Nullable="false" />
+          <Property Name="idUtilisateur" Type="int" Nullable="false" />
+          <Property Name="nbSlot" Type="int" />
+        </EntityType>
         <EntityType Name="Annonce">
           <Key>
             <PropertyRef Name="idAnnonce" />
@@ -61,6 +70,17 @@
           <Property Name="actifLoisir" Type="bit" />
           <Property Name="actifPro" Type="bit" />
         </EntityType>
+        <EntityType Name="Rencontre">
+          <Key>
+            <PropertyRef Name="idRencontre" />
+          </Key>
+          <Property Name="idRencontre" Type="int" Nullable="false" />
+          <Property Name="idDemander" Type="int" />
+          <Property Name="idDemandeur" Type="int" />
+          <Property Name="aAccepteDemander" Type="bit" />
+          <Property Name="aAccepteDemandeur" Type="bit" />
+          <Property Name="idVoyage" Type="int" />
+        </EntityType>
         <EntityType Name="Utilisateur">
           <Key>
             <PropertyRef Name="idUtilisateur" />
@@ -83,6 +103,30 @@
           <Property Name="numeroTrain" Type="int" />
           <Property Name="nbWagon" Type="int" />
         </EntityType>
+        <Association Name="FK_Adhesion_Annonce">
+          <End Role="Annonce" Type="Self.Annonce" Multiplicity="1" />
+          <End Role="Adhesion" Type="Self.Adhesion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Annonce">
+              <PropertyRef Name="idAnnonce" />
+            </Principal>
+            <Dependent Role="Adhesion">
+              <PropertyRef Name="idAnnonce" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Adhesion_Utilisateur">
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="1" />
+          <End Role="Adhesion" Type="Self.Adhesion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="idUtilisateur" />
+            </Principal>
+            <Dependent Role="Adhesion">
+              <PropertyRef Name="idUtilisateur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Annonce_Categorie1">
           <End Role="Categorie" Type="Self.Categorie" Multiplicity="0..1" />
           <End Role="Annonce" Type="Self.Annonce" Multiplicity="*" />
@@ -155,6 +199,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Rencontre_Utilisateur">
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="0..1" />
+          <End Role="Rencontre" Type="Self.Rencontre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="idUtilisateur" />
+            </Principal>
+            <Dependent Role="Rencontre">
+              <PropertyRef Name="idDemander" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rencontre_Utilisateur1">
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="0..1" />
+          <End Role="Rencontre" Type="Self.Rencontre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="idUtilisateur" />
+            </Principal>
+            <Dependent Role="Rencontre">
+              <PropertyRef Name="idDemandeur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Utilisateur_Profil">
           <End Role="Profil" Type="Self.Profil" Multiplicity="0..1" />
           <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="*" />
@@ -168,13 +236,23 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="Hackathon16DijonModelStoreContainer">
+          <EntitySet Name="Adhesion" EntityType="Self.Adhesion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Annonce" EntityType="Self.Annonce" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categorie" EntityType="Self.Categorie" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Chat" EntityType="Self.Chat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Inscription" EntityType="Self.Inscription" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profil" EntityType="Self.Profil" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rencontre" EntityType="Self.Rencontre" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Utilisateur" EntityType="Self.Utilisateur" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Voyage" EntityType="Self.Voyage" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Adhesion_Annonce" Association="Self.FK_Adhesion_Annonce">
+            <End Role="Annonce" EntitySet="Annonce" />
+            <End Role="Adhesion" EntitySet="Adhesion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Adhesion_Utilisateur" Association="Self.FK_Adhesion_Utilisateur">
+            <End Role="Utilisateur" EntitySet="Utilisateur" />
+            <End Role="Adhesion" EntitySet="Adhesion" />
+          </AssociationSet>
           <AssociationSet Name="FK_Annonce_Categorie1" Association="Self.FK_Annonce_Categorie1">
             <End Role="Categorie" EntitySet="Categorie" />
             <End Role="Annonce" EntitySet="Annonce" />
@@ -199,6 +277,14 @@
             <End Role="Voyage" EntitySet="Voyage" />
             <End Role="Inscription" EntitySet="Inscription" />
           </AssociationSet>
+          <AssociationSet Name="FK_Rencontre_Utilisateur" Association="Self.FK_Rencontre_Utilisateur">
+            <End Role="Utilisateur" EntitySet="Utilisateur" />
+            <End Role="Rencontre" EntitySet="Rencontre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rencontre_Utilisateur1" Association="Self.FK_Rencontre_Utilisateur1">
+            <End Role="Utilisateur" EntitySet="Utilisateur" />
+            <End Role="Rencontre" EntitySet="Rencontre" />
+          </AssociationSet>
           <AssociationSet Name="FK_Utilisateur_Profil" Association="Self.FK_Utilisateur_Profil">
             <End Role="Profil" EntitySet="Profil" />
             <End Role="Utilisateur" EntitySet="Utilisateur" />
@@ -222,6 +308,7 @@
           <Property Name="idUtilisateur" Type="Int32" />
           <NavigationProperty Name="Categorie" Relationship="Self.FK_Annonce_Categorie1" FromRole="Annonce" ToRole="Categorie" />
           <NavigationProperty Name="Utilisateur" Relationship="Self.FK_Annonce_Utilisateur" FromRole="Annonce" ToRole="Utilisateur" />
+          <NavigationProperty Name="Adhesions" Relationship="Hackathon16DijonModel.FK_Adhesion_Annonce" FromRole="Annonce" ToRole="Adhesion" />
         </EntityType>
         <EntityType Name="Categorie">
           <Key>
@@ -273,6 +360,9 @@
           <NavigationProperty Name="Profil" Relationship="Self.FK_Utilisateur_Profil" FromRole="Utilisateur" ToRole="Profil" />
           <NavigationProperty Name="Chats" Relationship="Hackathon16DijonModel.FK_Chat_Utilisateur" FromRole="Utilisateur" ToRole="Chat" />
           <NavigationProperty Name="Chats1" Relationship="Hackathon16DijonModel.FK_Chat_Utilisateur1" FromRole="Utilisateur" ToRole="Chat" />
+          <NavigationProperty Name="Adhesions" Relationship="Hackathon16DijonModel.FK_Adhesion_Utilisateur" FromRole="Utilisateur" ToRole="Adhesion" />
+          <NavigationProperty Name="Rencontres" Relationship="Hackathon16DijonModel.FK_Rencontre_Utilisateur" FromRole="Utilisateur" ToRole="Rencontre" />
+          <NavigationProperty Name="Rencontres1" Relationship="Hackathon16DijonModel.FK_Rencontre_Utilisateur1" FromRole="Utilisateur" ToRole="Rencontre" />
         </EntityType>
         <EntityType Name="Voyage">
           <Key>
@@ -384,6 +474,24 @@
             <End Role="Utilisateur" EntitySet="Utilisateurs" />
             <End Role="Chat" EntitySet="Chats" />
           </AssociationSet>
+          <EntitySet Name="Adhesions" EntityType="Hackathon16DijonModel.Adhesion" />
+          <EntitySet Name="Rencontres" EntityType="Hackathon16DijonModel.Rencontre" />
+          <AssociationSet Name="FK_Adhesion_Annonce" Association="Hackathon16DijonModel.FK_Adhesion_Annonce">
+            <End Role="Annonce" EntitySet="Annonces" />
+            <End Role="Adhesion" EntitySet="Adhesions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Adhesion_Utilisateur" Association="Hackathon16DijonModel.FK_Adhesion_Utilisateur">
+            <End Role="Utilisateur" EntitySet="Utilisateurs" />
+            <End Role="Adhesion" EntitySet="Adhesions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rencontre_Utilisateur" Association="Hackathon16DijonModel.FK_Rencontre_Utilisateur">
+            <End Role="Utilisateur" EntitySet="Utilisateurs" />
+            <End Role="Rencontre" EntitySet="Rencontres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rencontre_Utilisateur1" Association="Hackathon16DijonModel.FK_Rencontre_Utilisateur1">
+            <End Role="Utilisateur" EntitySet="Utilisateurs" />
+            <End Role="Rencontre" EntitySet="Rencontres" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Chat">
           <Key>
@@ -418,6 +526,78 @@
             </Principal>
             <Dependent Role="Chat">
               <PropertyRef Name="idDestinataire" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Adhesion">
+          <Key>
+            <PropertyRef Name="idAnnonce" />
+            <PropertyRef Name="idUtilisateur" />
+          </Key>
+          <Property Name="idAnnonce" Type="Int32" Nullable="false" />
+          <Property Name="idUtilisateur" Type="Int32" Nullable="false" />
+          <Property Name="nbSlot" Type="Int32" />
+          <NavigationProperty Name="Annonce" Relationship="Hackathon16DijonModel.FK_Adhesion_Annonce" FromRole="Adhesion" ToRole="Annonce" />
+          <NavigationProperty Name="Utilisateur" Relationship="Hackathon16DijonModel.FK_Adhesion_Utilisateur" FromRole="Adhesion" ToRole="Utilisateur" />
+        </EntityType>
+        <EntityType Name="Rencontre">
+          <Key>
+            <PropertyRef Name="idRencontre" />
+          </Key>
+          <Property Name="idRencontre" Type="Int32" Nullable="false" />
+          <Property Name="idDemander" Type="Int32" />
+          <Property Name="idDemandeur" Type="Int32" />
+          <Property Name="aAccepteDemander" Type="Boolean" />
+          <Property Name="aAccepteDemandeur" Type="Boolean" />
+          <Property Name="idVoyage" Type="Int32" />
+          <NavigationProperty Name="Utilisateur" Relationship="Hackathon16DijonModel.FK_Rencontre_Utilisateur" FromRole="Rencontre" ToRole="Utilisateur" />
+          <NavigationProperty Name="Utilisateur1" Relationship="Hackathon16DijonModel.FK_Rencontre_Utilisateur1" FromRole="Rencontre" ToRole="Utilisateur" />
+        </EntityType>
+        <Association Name="FK_Adhesion_Annonce">
+          <End Type="Hackathon16DijonModel.Annonce" Role="Annonce" Multiplicity="1" />
+          <End Type="Hackathon16DijonModel.Adhesion" Role="Adhesion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Annonce">
+              <PropertyRef Name="idAnnonce" />
+            </Principal>
+            <Dependent Role="Adhesion">
+              <PropertyRef Name="idAnnonce" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Adhesion_Utilisateur">
+          <End Type="Hackathon16DijonModel.Utilisateur" Role="Utilisateur" Multiplicity="1" />
+          <End Type="Hackathon16DijonModel.Adhesion" Role="Adhesion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="idUtilisateur" />
+            </Principal>
+            <Dependent Role="Adhesion">
+              <PropertyRef Name="idUtilisateur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rencontre_Utilisateur">
+          <End Type="Hackathon16DijonModel.Utilisateur" Role="Utilisateur" Multiplicity="0..1" />
+          <End Type="Hackathon16DijonModel.Rencontre" Role="Rencontre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="idUtilisateur" />
+            </Principal>
+            <Dependent Role="Rencontre">
+              <PropertyRef Name="idDemander" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rencontre_Utilisateur1">
+          <End Type="Hackathon16DijonModel.Utilisateur" Role="Utilisateur" Multiplicity="0..1" />
+          <End Type="Hackathon16DijonModel.Rencontre" Role="Rencontre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="idUtilisateur" />
+            </Principal>
+            <Dependent Role="Rencontre">
+              <PropertyRef Name="idDemandeur" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -508,6 +688,27 @@
                 <ScalarProperty Name="idDestinataire" ColumnName="idDestinataire" />
                 <ScalarProperty Name="idExpediteur" ColumnName="idExpediteur" />
                 <ScalarProperty Name="idMessage" ColumnName="idMessage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Adhesions">
+            <EntityTypeMapping TypeName="Hackathon16DijonModel.Adhesion">
+              <MappingFragment StoreEntitySet="Adhesion">
+                <ScalarProperty Name="nbSlot" ColumnName="nbSlot" />
+                <ScalarProperty Name="idUtilisateur" ColumnName="idUtilisateur" />
+                <ScalarProperty Name="idAnnonce" ColumnName="idAnnonce" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rencontres">
+            <EntityTypeMapping TypeName="Hackathon16DijonModel.Rencontre">
+              <MappingFragment StoreEntitySet="Rencontre">
+                <ScalarProperty Name="idVoyage" ColumnName="idVoyage" />
+                <ScalarProperty Name="aAccepteDemandeur" ColumnName="aAccepteDemandeur" />
+                <ScalarProperty Name="aAccepteDemander" ColumnName="aAccepteDemander" />
+                <ScalarProperty Name="idDemandeur" ColumnName="idDemandeur" />
+                <ScalarProperty Name="idDemander" ColumnName="idDemander" />
+                <ScalarProperty Name="idRencontre" ColumnName="idRencontre" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

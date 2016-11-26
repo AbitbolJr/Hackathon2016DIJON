@@ -1,6 +1,23 @@
 ﻿USE [Hackathon16Dijon]
 GO
-/****** Object:  Table [dbo].[Annonce]    Script Date: 26/11/2016 12:27:48 ******/
+/****** Object:  Table [dbo].[Adhesion]    Script Date: 26/11/2016 17:12:15 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Adhesion](
+	[idAnnonce] [int] NOT NULL,
+	[idUtilisateur] [int] NOT NULL,
+	[nbSlot] [int] NULL,
+ CONSTRAINT [PK_Adhesion] PRIMARY KEY CLUSTERED 
+(
+	[idAnnonce] ASC,
+	[idUtilisateur] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Annonce]    Script Date: 26/11/2016 17:12:15 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -21,7 +38,7 @@ CREATE TABLE [dbo].[Annonce](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Categorie]    Script Date: 26/11/2016 12:27:48 ******/
+/****** Object:  Table [dbo].[Categorie]    Script Date: 26/11/2016 17:12:15 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -36,7 +53,7 @@ CREATE TABLE [dbo].[Categorie](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Chat]    Script Date: 26/11/2016 12:27:48 ******/
+/****** Object:  Table [dbo].[Chat]    Script Date: 26/11/2016 17:12:15 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -54,7 +71,7 @@ CREATE TABLE [dbo].[Chat](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Inscription]    Script Date: 26/11/2016 12:27:48 ******/
+/****** Object:  Table [dbo].[Inscription]    Script Date: 26/11/2016 17:12:15 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -73,7 +90,7 @@ CREATE TABLE [dbo].[Inscription](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Profil]    Script Date: 26/11/2016 12:27:48 ******/
+/****** Object:  Table [dbo].[Profil]    Script Date: 26/11/2016 17:12:15 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -96,7 +113,26 @@ CREATE TABLE [dbo].[Profil](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Utilisateur]    Script Date: 26/11/2016 12:27:48 ******/
+/****** Object:  Table [dbo].[Rencontre]    Script Date: 26/11/2016 17:12:15 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Rencontre](
+	[idRencontre] [int] NOT NULL,
+	[idDemander] [int] NULL,
+	[idDemandeur] [int] NULL,
+	[aAccepteDemander] [bit] NULL,
+	[aAccepteDemandeur] [bit] NULL,
+	[idVoyage] [int] NULL,
+ CONSTRAINT [PK_Rencontre] PRIMARY KEY CLUSTERED 
+(
+	[idRencontre] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Utilisateur]    Script Date: 26/11/2016 17:12:15 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -113,7 +149,7 @@ CREATE TABLE [dbo].[Utilisateur](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Voyage]    Script Date: 26/11/2016 12:27:48 ******/
+/****** Object:  Table [dbo].[Voyage]    Script Date: 26/11/2016 17:12:15 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -133,6 +169,16 @@ CREATE TABLE [dbo].[Voyage](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+GO
+ALTER TABLE [dbo].[Adhesion]  WITH CHECK ADD  CONSTRAINT [FK_Adhesion_Annonce] FOREIGN KEY([idAnnonce])
+REFERENCES [dbo].[Annonce] ([idAnnonce])
+GO
+ALTER TABLE [dbo].[Adhesion] CHECK CONSTRAINT [FK_Adhesion_Annonce]
+GO
+ALTER TABLE [dbo].[Adhesion]  WITH CHECK ADD  CONSTRAINT [FK_Adhesion_Utilisateur] FOREIGN KEY([idUtilisateur])
+REFERENCES [dbo].[Utilisateur] ([idUtilisateur])
+GO
+ALTER TABLE [dbo].[Adhesion] CHECK CONSTRAINT [FK_Adhesion_Utilisateur]
 GO
 ALTER TABLE [dbo].[Annonce]  WITH CHECK ADD  CONSTRAINT [FK_Annonce_Categorie1] FOREIGN KEY([idCategorie])
 REFERENCES [dbo].[Categorie] ([idCategorie])
@@ -163,6 +209,16 @@ ALTER TABLE [dbo].[Inscription]  WITH CHECK ADD  CONSTRAINT [FK_Inscription_Voya
 REFERENCES [dbo].[Voyage] ([idVoyage])
 GO
 ALTER TABLE [dbo].[Inscription] CHECK CONSTRAINT [FK_Inscription_Voyage]
+GO
+ALTER TABLE [dbo].[Rencontre]  WITH CHECK ADD  CONSTRAINT [FK_Rencontre_Utilisateur] FOREIGN KEY([idDemander])
+REFERENCES [dbo].[Utilisateur] ([idUtilisateur])
+GO
+ALTER TABLE [dbo].[Rencontre] CHECK CONSTRAINT [FK_Rencontre_Utilisateur]
+GO
+ALTER TABLE [dbo].[Rencontre]  WITH CHECK ADD  CONSTRAINT [FK_Rencontre_Utilisateur1] FOREIGN KEY([idDemandeur])
+REFERENCES [dbo].[Utilisateur] ([idUtilisateur])
+GO
+ALTER TABLE [dbo].[Rencontre] CHECK CONSTRAINT [FK_Rencontre_Utilisateur1]
 GO
 ALTER TABLE [dbo].[Utilisateur]  WITH CHECK ADD  CONSTRAINT [FK_Utilisateur_Profil] FOREIGN KEY([idProfil])
 REFERENCES [dbo].[Profil] ([idProfil])

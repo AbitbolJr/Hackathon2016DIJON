@@ -19,6 +19,12 @@
         <EntityTypeShape EntityType="Hackathon16DijonModel.Chat" Width="1.5" PointX="6.875" PointY="8.625" />
         <AssociationConnector Association="Hackathon16DijonModel.FK_Chat_Utilisateur" />
         <AssociationConnector Association="Hackathon16DijonModel.FK_Chat_Utilisateur1" />
+        <EntityTypeShape EntityType="Hackathon16DijonModel.Adhesion" Width="1.5" PointX="11.5" PointY="5.5" />
+        <EntityTypeShape EntityType="Hackathon16DijonModel.Rencontre" Width="1.5" PointX="6.25" PointY="12.375" />
+        <AssociationConnector Association="Hackathon16DijonModel.FK_Adhesion_Annonce" />
+        <AssociationConnector Association="Hackathon16DijonModel.FK_Adhesion_Utilisateur" />
+        <AssociationConnector Association="Hackathon16DijonModel.FK_Rencontre_Utilisateur" />
+        <AssociationConnector Association="Hackathon16DijonModel.FK_Rencontre_Utilisateur1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
