@@ -4,8 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="312e32baa0fb4622afe577a288bdb9c1" Name="Diagram1">
-        <EntityTypeShape EntityType="Hackathon16DijonModel.Utilisateur" Width="1.5" PointX="2.375" PointY="1.625" IsExpanded="true" />
+      <Diagram DiagramId="e4547d85aac74de9a019a3b185f60b5b" Name="Diagram1">
+        <EntityTypeShape EntityType="Hackathon16DijonModel.Annonce" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Hackathon16DijonModel.Categorie" Width="1.5" PointX="3" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Hackathon16DijonModel.Inscription" Width="1.5" PointX="8.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Hackathon16DijonModel.Profil" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Hackathon16DijonModel.Utilisateur" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Hackathon16DijonModel.Voyage" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="Hackathon16DijonModel.FK_Annonce_Categorie1" ManuallyRouted="false" />
+        <AssociationConnector Association="Hackathon16DijonModel.FK_Annonce_Utilisateur" ManuallyRouted="false" />
+        <AssociationConnector Association="Hackathon16DijonModel.FK_Inscription_Utilisateur" ManuallyRouted="false" />
+        <AssociationConnector Association="Hackathon16DijonModel.FK_Inscription_Voyage" ManuallyRouted="false" />
+        <AssociationConnector Association="Hackathon16DijonModel.FK_Utilisateur_Profil" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

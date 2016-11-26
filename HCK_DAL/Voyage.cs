@@ -12,24 +12,23 @@ namespace HCK_DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class Utilisateur
+    public partial class Voyage
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Utilisateur()
+        public Voyage()
         {
-            this.Annonces = new HashSet<Annonce>();
             this.Inscriptions = new HashSet<Inscription>();
         }
     
-        public int idUtilisateur { get; set; }
-        public string motDePasse { get; set; }
-        public string adresseMail { get; set; }
-        public Nullable<int> idProfil { get; set; }
+        public int idVoyage { get; set; }
+        public string depart { get; set; }
+        public string arrivee { get; set; }
+        public string date { get; set; }
+        public string horaire { get; set; }
+        public Nullable<int> numeroTrain { get; set; }
+        public Nullable<int> nbWagon { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Annonce> Annonces { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Inscription> Inscriptions { get; set; }
-        public virtual Profil Profil { get; set; }
     }
 }

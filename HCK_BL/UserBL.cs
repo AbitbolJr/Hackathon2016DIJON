@@ -24,7 +24,7 @@ namespace HCK_BL
             try
             {
                 Utilisateur user = context.GetAll<Utilisateur>()
-                    .Where(u => u.MAIL == pLogin && u.PASSWORD == pPassword)
+                    .Where(u => u.adresseMail == pLogin && u.motDePasse == pPassword)
                     .FirstOrDefault();
 
                 if (user != null)

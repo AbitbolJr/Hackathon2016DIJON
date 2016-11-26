@@ -5,32 +5,342 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="Hackathon16DijonModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Annonce">
+          <Key>
+            <PropertyRef Name="idAnnonce" />
+          </Key>
+          <Property Name="idAnnonce" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idCategorie" Type="int" />
+          <Property Name="titre" Type="nvarchar" MaxLength="50" />
+          <Property Name="description" Type="nvarchar" MaxLength="50" />
+          <Property Name="nbSlot" Type="int" />
+          <Property Name="nbSlotUtilise" Type="int" />
+          <Property Name="estActive" Type="bit" />
+          <Property Name="idUtilisateur" Type="int" />
+        </EntityType>
+        <EntityType Name="Categorie">
+          <Key>
+            <PropertyRef Name="idCategorie" />
+          </Key>
+          <Property Name="idCategorie" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="libelle" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'Hackathon16Dijon.dbo.Chat' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="Chat">
+          <Property Name="idExpediteur" Type="int" />
+          <Property Name="idDestinataire" Type="int" />
+          <Property Name="dateEnvoi" Type="nvarchar" MaxLength="50" />
+          <Property Name="message" Type="nvarchar" MaxLength="250" />
+        </EntityType>-->
+        <EntityType Name="Inscription">
+          <Key>
+            <PropertyRef Name="idUtilisateur" />
+            <PropertyRef Name="idVoyage" />
+          </Key>
+          <Property Name="idUtilisateur" Type="int" Nullable="false" />
+          <Property Name="idVoyage" Type="int" Nullable="false" />
+          <Property Name="estHebdomadaire" Type="bit" />
+          <Property Name="estQuotidien" Type="bit" />
+        </EntityType>
+        <EntityType Name="Profil">
+          <Key>
+            <PropertyRef Name="idProfil" />
+          </Key>
+          <Property Name="idProfil" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="prenom" Type="nvarchar" MaxLength="50" />
+          <Property Name="nom" Type="nvarchar" MaxLength="50" />
+          <Property Name="dateDeNaissance" Type="nvarchar" MaxLength="50" />
+          <Property Name="fonction" Type="nvarchar" MaxLength="50" />
+          <Property Name="entreprise" Type="nvarchar" MaxLength="50" />
+          <Property Name="descriptionPro" Type="nvarchar" MaxLength="250" />
+          <Property Name="descriptionLoisir" Type="nvarchar" MaxLength="250" />
+          <Property Name="actifLoisir" Type="bit" />
+          <Property Name="actifPro" Type="bit" />
+        </EntityType>
         <EntityType Name="Utilisateur">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="idUtilisateur" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MAIL" Type="varchar" MaxLength="100" />
-          <Property Name="PASSWORD" Type="varchar" MaxLength="50" />
+          <Property Name="idUtilisateur" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="motDePasse" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="adresseMail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="idProfil" Type="int" />
         </EntityType>
+        <EntityType Name="Voyage">
+          <Key>
+            <PropertyRef Name="idVoyage" />
+          </Key>
+          <Property Name="idVoyage" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="depart" Type="nvarchar" MaxLength="50" />
+          <Property Name="arrivee" Type="nvarchar" MaxLength="50" />
+          <Property Name="date" Type="nvarchar" MaxLength="50" />
+          <Property Name="horaire" Type="nvarchar" MaxLength="50" />
+          <Property Name="numeroTrain" Type="int" />
+          <Property Name="nbWagon" Type="int" />
+        </EntityType>
+        <Association Name="FK_Annonce_Categorie1">
+          <End Role="Categorie" Type="Self.Categorie" Multiplicity="0..1" />
+          <End Role="Annonce" Type="Self.Annonce" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorie">
+              <PropertyRef Name="idCategorie" />
+            </Principal>
+            <Dependent Role="Annonce">
+              <PropertyRef Name="idCategorie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Annonce_Utilisateur">
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="0..1" />
+          <End Role="Annonce" Type="Self.Annonce" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="idUtilisateur" />
+            </Principal>
+            <Dependent Role="Annonce">
+              <PropertyRef Name="idUtilisateur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+error 6004: The table 'Hackathon16Dijon.dbo.Chat' is referenced by a relationship, but cannot be found.
+        <Association Name="FK_Chat_Utilisateur" />-->
+        <!--Errors Found During Generation:
+error 6004: The table 'Hackathon16Dijon.dbo.Chat' is referenced by a relationship, but cannot be found.
+        <Association Name="FK_Chat_Utilisateur1" />-->
+        <Association Name="FK_Inscription_Utilisateur">
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="1" />
+          <End Role="Inscription" Type="Self.Inscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="idUtilisateur" />
+            </Principal>
+            <Dependent Role="Inscription">
+              <PropertyRef Name="idUtilisateur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inscription_Voyage">
+          <End Role="Voyage" Type="Self.Voyage" Multiplicity="1" />
+          <End Role="Inscription" Type="Self.Inscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Voyage">
+              <PropertyRef Name="idVoyage" />
+            </Principal>
+            <Dependent Role="Inscription">
+              <PropertyRef Name="idVoyage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Utilisateur_Profil">
+          <End Role="Profil" Type="Self.Profil" Multiplicity="0..1" />
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profil">
+              <PropertyRef Name="idProfil" />
+            </Principal>
+            <Dependent Role="Utilisateur">
+              <PropertyRef Name="idProfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Hackathon16DijonModelStoreContainer">
+          <EntitySet Name="Annonce" EntityType="Self.Annonce" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categorie" EntityType="Self.Categorie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inscription" EntityType="Self.Inscription" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profil" EntityType="Self.Profil" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Utilisateur" EntityType="Self.Utilisateur" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Voyage" EntityType="Self.Voyage" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Annonce_Categorie1" Association="Self.FK_Annonce_Categorie1">
+            <End Role="Categorie" EntitySet="Categorie" />
+            <End Role="Annonce" EntitySet="Annonce" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Annonce_Utilisateur" Association="Self.FK_Annonce_Utilisateur">
+            <End Role="Utilisateur" EntitySet="Utilisateur" />
+            <End Role="Annonce" EntitySet="Annonce" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inscription_Utilisateur" Association="Self.FK_Inscription_Utilisateur">
+            <End Role="Utilisateur" EntitySet="Utilisateur" />
+            <End Role="Inscription" EntitySet="Inscription" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inscription_Voyage" Association="Self.FK_Inscription_Voyage">
+            <End Role="Voyage" EntitySet="Voyage" />
+            <End Role="Inscription" EntitySet="Inscription" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Utilisateur_Profil" Association="Self.FK_Utilisateur_Profil">
+            <End Role="Profil" EntitySet="Profil" />
+            <End Role="Utilisateur" EntitySet="Utilisateur" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Hackathon16DijonModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Annonce">
+          <Key>
+            <PropertyRef Name="idAnnonce" />
+          </Key>
+          <Property Name="idAnnonce" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idCategorie" Type="Int32" />
+          <Property Name="titre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="nbSlot" Type="Int32" />
+          <Property Name="nbSlotUtilise" Type="Int32" />
+          <Property Name="estActive" Type="Boolean" />
+          <Property Name="idUtilisateur" Type="Int32" />
+          <NavigationProperty Name="Categorie" Relationship="Self.FK_Annonce_Categorie1" FromRole="Annonce" ToRole="Categorie" />
+          <NavigationProperty Name="Utilisateur" Relationship="Self.FK_Annonce_Utilisateur" FromRole="Annonce" ToRole="Utilisateur" />
+        </EntityType>
+        <EntityType Name="Categorie">
+          <Key>
+            <PropertyRef Name="idCategorie" />
+          </Key>
+          <Property Name="idCategorie" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="libelle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Annonces" Relationship="Self.FK_Annonce_Categorie1" FromRole="Categorie" ToRole="Annonce" />
+        </EntityType>
+        <EntityType Name="Inscription">
+          <Key>
+            <PropertyRef Name="idUtilisateur" />
+            <PropertyRef Name="idVoyage" />
+          </Key>
+          <Property Name="idUtilisateur" Type="Int32" Nullable="false" />
+          <Property Name="idVoyage" Type="Int32" Nullable="false" />
+          <Property Name="estHebdomadaire" Type="Boolean" />
+          <Property Name="estQuotidien" Type="Boolean" />
+          <NavigationProperty Name="Utilisateur" Relationship="Self.FK_Inscription_Utilisateur" FromRole="Inscription" ToRole="Utilisateur" />
+          <NavigationProperty Name="Voyage" Relationship="Self.FK_Inscription_Voyage" FromRole="Inscription" ToRole="Voyage" />
+        </EntityType>
+        <EntityType Name="Profil">
+          <Key>
+            <PropertyRef Name="idProfil" />
+          </Key>
+          <Property Name="idProfil" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="prenom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="nom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="dateDeNaissance" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="fonction" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="entreprise" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="descriptionPro" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="descriptionLoisir" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="actifLoisir" Type="Boolean" />
+          <Property Name="actifPro" Type="Boolean" />
+          <NavigationProperty Name="Utilisateurs" Relationship="Self.FK_Utilisateur_Profil" FromRole="Profil" ToRole="Utilisateur" />
+        </EntityType>
         <EntityType Name="Utilisateur">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="idUtilisateur" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MAIL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="PASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="idUtilisateur" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="motDePasse" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="adresseMail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="idProfil" Type="Int32" />
+          <NavigationProperty Name="Annonces" Relationship="Self.FK_Annonce_Utilisateur" FromRole="Utilisateur" ToRole="Annonce" />
+          <NavigationProperty Name="Inscriptions" Relationship="Self.FK_Inscription_Utilisateur" FromRole="Utilisateur" ToRole="Inscription" />
+          <NavigationProperty Name="Profil" Relationship="Self.FK_Utilisateur_Profil" FromRole="Utilisateur" ToRole="Profil" />
         </EntityType>
+        <EntityType Name="Voyage">
+          <Key>
+            <PropertyRef Name="idVoyage" />
+          </Key>
+          <Property Name="idVoyage" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="depart" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="arrivee" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="horaire" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="numeroTrain" Type="Int32" />
+          <Property Name="nbWagon" Type="Int32" />
+          <NavigationProperty Name="Inscriptions" Relationship="Self.FK_Inscription_Voyage" FromRole="Voyage" ToRole="Inscription" />
+        </EntityType>
+        <Association Name="FK_Annonce_Categorie1">
+          <End Role="Categorie" Type="Self.Categorie" Multiplicity="0..1" />
+          <End Role="Annonce" Type="Self.Annonce" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorie">
+              <PropertyRef Name="idCategorie" />
+            </Principal>
+            <Dependent Role="Annonce">
+              <PropertyRef Name="idCategorie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Annonce_Utilisateur">
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="0..1" />
+          <End Role="Annonce" Type="Self.Annonce" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="idUtilisateur" />
+            </Principal>
+            <Dependent Role="Annonce">
+              <PropertyRef Name="idUtilisateur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inscription_Utilisateur">
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="1" />
+          <End Role="Inscription" Type="Self.Inscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="idUtilisateur" />
+            </Principal>
+            <Dependent Role="Inscription">
+              <PropertyRef Name="idUtilisateur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inscription_Voyage">
+          <End Role="Voyage" Type="Self.Voyage" Multiplicity="1" />
+          <End Role="Inscription" Type="Self.Inscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Voyage">
+              <PropertyRef Name="idVoyage" />
+            </Principal>
+            <Dependent Role="Inscription">
+              <PropertyRef Name="idVoyage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Utilisateur_Profil">
+          <End Role="Profil" Type="Self.Profil" Multiplicity="0..1" />
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profil">
+              <PropertyRef Name="idProfil" />
+            </Principal>
+            <Dependent Role="Utilisateur">
+              <PropertyRef Name="idProfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Hackathon16DijonEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Utilisateur" EntityType="Self.Utilisateur" />
+          <EntitySet Name="Annonces" EntityType="Self.Annonce" />
+          <EntitySet Name="Categories" EntityType="Self.Categorie" />
+          <EntitySet Name="Inscriptions" EntityType="Self.Inscription" />
+          <EntitySet Name="Profils" EntityType="Self.Profil" />
+          <EntitySet Name="Utilisateurs" EntityType="Self.Utilisateur" />
+          <EntitySet Name="Voyages" EntityType="Self.Voyage" />
+          <AssociationSet Name="FK_Annonce_Categorie1" Association="Self.FK_Annonce_Categorie1">
+            <End Role="Categorie" EntitySet="Categories" />
+            <End Role="Annonce" EntitySet="Annonces" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Annonce_Utilisateur" Association="Self.FK_Annonce_Utilisateur">
+            <End Role="Utilisateur" EntitySet="Utilisateurs" />
+            <End Role="Annonce" EntitySet="Annonces" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inscription_Utilisateur" Association="Self.FK_Inscription_Utilisateur">
+            <End Role="Utilisateur" EntitySet="Utilisateurs" />
+            <End Role="Inscription" EntitySet="Inscriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inscription_Voyage" Association="Self.FK_Inscription_Voyage">
+            <End Role="Voyage" EntitySet="Voyages" />
+            <End Role="Inscription" EntitySet="Inscriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Utilisateur_Profil" Association="Self.FK_Utilisateur_Profil">
+            <End Role="Profil" EntitySet="Profils" />
+            <End Role="Utilisateur" EntitySet="Utilisateurs" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -38,12 +348,74 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Hackathon16DijonModelStoreContainer" CdmEntityContainer="Hackathon16DijonEntities">
-          <EntitySetMapping Name="Utilisateur">
+          <EntitySetMapping Name="Annonces">
+            <EntityTypeMapping TypeName="Hackathon16DijonModel.Annonce">
+              <MappingFragment StoreEntitySet="Annonce">
+                <ScalarProperty Name="idAnnonce" ColumnName="idAnnonce" />
+                <ScalarProperty Name="idCategorie" ColumnName="idCategorie" />
+                <ScalarProperty Name="titre" ColumnName="titre" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="nbSlot" ColumnName="nbSlot" />
+                <ScalarProperty Name="nbSlotUtilise" ColumnName="nbSlotUtilise" />
+                <ScalarProperty Name="estActive" ColumnName="estActive" />
+                <ScalarProperty Name="idUtilisateur" ColumnName="idUtilisateur" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="Hackathon16DijonModel.Categorie">
+              <MappingFragment StoreEntitySet="Categorie">
+                <ScalarProperty Name="idCategorie" ColumnName="idCategorie" />
+                <ScalarProperty Name="libelle" ColumnName="libelle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inscriptions">
+            <EntityTypeMapping TypeName="Hackathon16DijonModel.Inscription">
+              <MappingFragment StoreEntitySet="Inscription">
+                <ScalarProperty Name="idUtilisateur" ColumnName="idUtilisateur" />
+                <ScalarProperty Name="idVoyage" ColumnName="idVoyage" />
+                <ScalarProperty Name="estHebdomadaire" ColumnName="estHebdomadaire" />
+                <ScalarProperty Name="estQuotidien" ColumnName="estQuotidien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profils">
+            <EntityTypeMapping TypeName="Hackathon16DijonModel.Profil">
+              <MappingFragment StoreEntitySet="Profil">
+                <ScalarProperty Name="idProfil" ColumnName="idProfil" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="dateDeNaissance" ColumnName="dateDeNaissance" />
+                <ScalarProperty Name="fonction" ColumnName="fonction" />
+                <ScalarProperty Name="entreprise" ColumnName="entreprise" />
+                <ScalarProperty Name="descriptionPro" ColumnName="descriptionPro" />
+                <ScalarProperty Name="descriptionLoisir" ColumnName="descriptionLoisir" />
+                <ScalarProperty Name="actifLoisir" ColumnName="actifLoisir" />
+                <ScalarProperty Name="actifPro" ColumnName="actifPro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Utilisateurs">
             <EntityTypeMapping TypeName="Hackathon16DijonModel.Utilisateur">
               <MappingFragment StoreEntitySet="Utilisateur">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="MAIL" ColumnName="MAIL" />
-                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="idUtilisateur" ColumnName="idUtilisateur" />
+                <ScalarProperty Name="motDePasse" ColumnName="motDePasse" />
+                <ScalarProperty Name="adresseMail" ColumnName="adresseMail" />
+                <ScalarProperty Name="idProfil" ColumnName="idProfil" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Voyages">
+            <EntityTypeMapping TypeName="Hackathon16DijonModel.Voyage">
+              <MappingFragment StoreEntitySet="Voyage">
+                <ScalarProperty Name="idVoyage" ColumnName="idVoyage" />
+                <ScalarProperty Name="depart" ColumnName="depart" />
+                <ScalarProperty Name="arrivee" ColumnName="arrivee" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="horaire" ColumnName="horaire" />
+                <ScalarProperty Name="numeroTrain" ColumnName="numeroTrain" />
+                <ScalarProperty Name="nbWagon" ColumnName="nbWagon" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -61,10 +433,10 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
