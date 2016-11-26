@@ -58,6 +58,10 @@
       <Project>{75E9F895-8F9C-4F0F-8609-7156292B0116}</Project>
       <Name>HCK_DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HCK_TOOLS\HCK_TOOLS.csproj">
+      <Project>{7F83F0FD-3209-4514-8C17-A98146247AD1}</Project>
+      <Name>HCK_TOOLS</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
