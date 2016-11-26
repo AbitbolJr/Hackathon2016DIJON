@@ -9,7 +9,7 @@ namespace HCK_WebApp.Models
     {
         public string prenom { get; set; }
         public string nom { get; set; }
-        public string dateDeNaissance { get; set; }
+        public DateTime dateDeNaissance { get; set; }
         public string fonction { get; set; }
         public string entreprise { get; set; }
         public string descriptionPro { get; set; }

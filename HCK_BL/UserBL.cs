@@ -36,7 +36,7 @@ namespace HCK_BL
             return user;
         }
 
-        public bool Register(string pLogin, string pPassword, string pPrenom, string pNom, string pDateNaissance)
+        public bool Register(string pLogin, string pPassword, string pPrenom, string pNom, DateTime pDateNaissance)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace HCK_BL
                     throw new Exception("Veuillez renseigner un prénom");
                 }
 
-                if (String.IsNullOrEmpty(pDateNaissance))
+                if (pDateNaissance == null)
                 {
                     throw new Exception("Veuillez renseigner une date de naissance");
                 }
@@ -73,7 +73,7 @@ namespace HCK_BL
             return true;
         }
 
-        public bool EditProfil(string pLogin, string pPassword, string pPrenom, string pNom, string pDateNaissance, string pFonction, string pEntreprise,
+        public bool EditProfil(string pLogin, string pPassword, string pPrenom, string pNom, DateTime pDateNaissance, string pFonction, string pEntreprise,
             string pDescriptionPro, string pDescriptionLoisir, bool pActifLoisir, bool pActifPro)
         {
             try
@@ -83,7 +83,7 @@ namespace HCK_BL
                     throw new Exception("Veuillez renseigner un prénom");
                 }
 
-                if (String.IsNullOrEmpty(pDateNaissance))
+                if (pDateNaissance == null)
                 {
                     throw new Exception("Veuillez renseigner une date de naissance");
                 }

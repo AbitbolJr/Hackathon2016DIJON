@@ -60,7 +60,6 @@ namespace HCK_WebApp.Controllers
         public ActionResult Register(UserRegisterVM model)
         {
             var result = this.context.Register(model.adresseMail, model.motDePasse, model.prenom, model.nom, model.dateDeNaissance); 
-                //model.fonction, model.entreprise, model.descriptionPro, model.descriptionLoisir, model.actifLoisir, model.actifPro);
 
             if (result)
             {
@@ -81,7 +80,7 @@ namespace HCK_WebApp.Controllers
         public ActionResult EditProfil(UserEditProfilVM model)
         {
             var result = context.EditProfil(model.adresseMail, model.motDePasse, model.prenom, model.nom, model.dateDeNaissance, model.fonction,
-                model.entreprise, model.descriptionPro, model.descriptionLoisir, model.actifLoisir, model.actifPro);
+                                            model.entreprise, model.descriptionPro, model.descriptionLoisir, model.actifLoisir, model.actifPro);
 
             if (result)
             {
