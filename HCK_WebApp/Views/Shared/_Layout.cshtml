@@ -24,8 +24,11 @@
                     @if (Request.Cookies["Hackathon"] != null)
                     {
                         <li><a href="#" style="color: white;">Welcome @Request.Cookies["Hackathon"]["Name"]</a></li>
-                        <li>@Html.ActionLink("Mes messages", "", "Chat", new { @class = "" })</li>
-                        <li>@Html.ActionLink("Log off", "LogOut", "Authentification")</li>
+                        <li>@Html.ActionLink("Mes messages", "", "Chat")</li>
+                        <li>@Html.ActionLink("Mes annonces", "GetAllAnnounces", "Announce")</li>
+                        <li>@Html.ActionLink("Mes voyages", "GetTrainList", "Voyage")</li>
+                        <li>@Html.ActionLink("Mon profil", "EditProfil", "Authentification")</li>
+                        <li>@Html.ActionLink("Deconnexion", "LogOut", "Authentification")</li>
                     }
                     else
                     {

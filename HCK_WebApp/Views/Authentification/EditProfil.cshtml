@@ -33,7 +33,7 @@
             <div class="form-group">
                 <div class="col-md-12">
                     <div class="">
-                        Activer le profil loisir :
+                        <span class="control-label">Activer le profil loisir :</span>
 
                         @Html.EditorFor(model => model.actifLoisir)
                         @Html.ValidationMessageFor(model => model.actifLoisir, "", new { @class = "text-danger" })
@@ -54,8 +54,7 @@
             <div class="form-group">
                 <div class="col-md-12">
                     <div class="">
-                        Activer le profil professionnel :
-
+                        <span class="control-label">Activer le profil professionnel :</span>
                         @Html.EditorFor(model => model.actifPro)
                         @Html.ValidationMessageFor(model => model.actifPro, "", new { @class = "text-danger" })
                     </div>
