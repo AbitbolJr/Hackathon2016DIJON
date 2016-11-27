@@ -5,51 +5,113 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>GetTrainList</h2>
+<h2>Résultats de la recherche</h2>
 
-
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.TravelDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TravelDate, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-12">
+                Date recherchée :
+                <label class="control-label col-md-2" style="font-weight: normal;">@Model.TravelDate.ToShortDateString()</label>
                 @Html.ValidationMessageFor(model => model.TravelDate, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.StartTrainStation, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.StartTrainStation, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-12">
+                Gare de départ :
+                <label class="control-label col-md-2" style="font-weight: normal;">@Model.StartTrainStation</label>
                 @Html.ValidationMessageFor(model => model.StartTrainStation, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.EndTrainStation, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EndTrainStation, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-12">
+                Gare d'arrivée :
+                <label class="control-label col-md-2" style="font-weight: normal;">@Model.EndTrainStation</label>
                 @Html.ValidationMessageFor(model => model.EndTrainStation, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+        <h3>Sélectionnez votre train</h3>
+
+        @foreach (var item in Model.VoyageFoundList)
+        {
+            <div class="row zoneLigneGlobal">
+                <div class="col-xs-8 zoneLigne">
+                    <div>
+                        <span class="petitZoneLigne">  Départ : @Model.StartTrainStation, @Html.DisplayFor(modelItem => item.horaireDepart).ToString().Replace(":00", "")</span>
+                        <span class="floatRight petitZoneLigne">  Numéro de train : @Html.DisplayFor(modelItem => item.numeroTrain)</span>
+
+                    </div>
+                    <div>
+                        <span class="petitZoneLigne">Arrivée : @Model.EndTrainStation, @Html.DisplayFor(modelItem => item.horaireArrivee).ToString().Replace(":00", "")</span>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <a href="/Voyage/Inscription?id=@item.numeroTrain.ToString()">
+                        <img src="~/Image/info.png" />
+                    </a>
+                    <a href="/Voyage/Detail?id=@item.numeroTrain.ToString()">
+                        <img src="~/Image/green_plus.png" />
+                    </a>
+                </div>
             </div>
-        </div>
+        }
+
+        @*<table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TravelDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.StartTrainStation)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EndTrainStation)
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.VoyageFoundList)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.numeroTrain)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.horaireDepart)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.horaireArrivee)
+                        </td>
+                        <td>
+                            <a href="/Voyage/Inscription?id=@item.numeroTrain.ToString()">
+                                <img style="width:20px" src="~/Resources/info.png" />
+                            </a>
+                        </td>
+                        <td>
+                            <a href="/Voyage/Detail?id=@item.numeroTrain.ToString()">
+                                <img style="width:20px" src="~/Resources/green_plus.png" />
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </table>*@
+
+        @*<div class="form-group">
+                <div class="col-md-offset-2 col-md-12">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>*@
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
