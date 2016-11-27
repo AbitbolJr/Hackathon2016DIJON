@@ -158,6 +158,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AnnounceController.cs" />
     <Compile Include="Controllers\AuthentificationController.cs" />
+    <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\VoyageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -178,6 +179,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Image\add-round-button.png" />
+    <Content Include="Image\cancel-button.png" />
+    <Content Include="Image\chat.png" />
     <Content Include="Image\la_vague.png" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
@@ -218,6 +222,8 @@
     <Content Include="Views\Announce\AddAnnounce.cshtml" />
     <Content Include="Views\Announce\EditAnnounce.cshtml" />
     <Content Include="Views\Announce\GetAllAnnounces.cshtml" />
+    <Content Include="Views\Chat\ListMessage.cshtml" />
+    <Content Include="Views\Chat\Conversation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

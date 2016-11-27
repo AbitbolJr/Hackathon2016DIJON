@@ -7,54 +7,43 @@
 
 <h2>Mes annonces</h2>
 
-<p>
-    @Html.ActionLink("Nouvelle annonce", "AddAnnounce")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            Thème
-        </th>
-        <th>
-            Activité
-        </th>
-        <th>
-            Descriptif
-        </th>
-        <th>
-            Nnb de personnes encore recherchées
-        </th>
-        <th>
-            Activée/désactivée
-        </th>
-        <th></th>
-    </tr>
+
+
+
+<div class="form-horizontal">
+    <hr />
+
+    <p>
+        @Html.ActionLink("Nouvelle annonce", "AddAnnounce")
+    </p>
+
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Categorie.libelle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.titre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.description)
-            </td>
-            <td>
-                @((item.nbSlot - item.nbSlotUtilise))
-            </td>
-            <td>
-                @Html.CheckBoxFor( modelItem => item.estActive.Value)
-            </td>
-            
-            <td>
-                @*@Html.ActionLink("Edit", "EditAnnounce", new { id = item.idAnnonce }) |*@
-                @*@Html.ActionLink("Details", "Details", new { id=item.idAnnonce }) |*@
-                @Html.ActionLink("Delete", "DeleteAnnounce", new { id = item.idAnnonce })
-            </td>
-        </tr>
+        <div class="row zoneLigneGlobal">
+            <div class="col-xs-10 zoneLigne">
+                <div>
+                    <span class="grandZoneLigne">  @Html.DisplayFor(modelItem => item.titre)</span>
+                    <span class="floatRight petitZoneLigne">  Categorie : @Html.DisplayFor(modelItem => item.Categorie.libelle)</span>
+                    
+                </div>
+                <div>
+                    <span class="petitZoneLigne">
+                        Activer :
+                        <input type="checkbox" checked value="1" id="flatOneRoundedCheckbox" name="" />
+                    </span>
+                    <span class="floatRight petitZoneLigne">  Nombre de slot utilisé :@((item.nbSlot - item.nbSlotUtilise))</span>
+                </div>
+            </div>
+            <div class="col-xs-1">
+                <img src="~/Image/cancel-button.png" />
+            </div>
+        </div>
     }
 
-</table>
+
+</div>
+
+
+ 
+

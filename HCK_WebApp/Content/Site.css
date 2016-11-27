@@ -244,3 +244,25 @@ footer{
     border-left: 40px solid #FFD045;
     width: 0;
 }
+
+.zoneLigne{
+    background-color: #f5efef;
+    padding: 10px;
+    margin: 10px;
+}
+
+.grandZoneLigne
+{
+    font-size:14px;
+}
+.petitZoneLigne
+{
+    font-size:11px;
+}
+
+
+.zoneLigneGlobal img{
+    height: 25px;
+    margin-top:27px;
+}
+
