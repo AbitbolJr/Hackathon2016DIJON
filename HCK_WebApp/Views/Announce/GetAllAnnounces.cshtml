@@ -5,30 +5,27 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>ListAnnounces</h2>
+<h2>Mes annonces</h2>
 
 <p>
-    @Html.ActionLink("Create New", "AddAnnounce")
+    @Html.ActionLink("Nouvelle annonce", "AddAnnounce")
 </p>
 <table class="table">
     <tr>
         <th>
-            Titre
+            Thème
         </th>
         <th>
-            Description
+            Activité
         </th>
         <th>
-            Nb de personnes meximum : 
+            Descriptif
         </th>
         <th>
-            Combien de personnes par défaut :
+            Nnb de personnes encore recherchées
         </th>
         <th>
-            Active
-        </th>
-        <th>
-            Catégorie
+            Activée/désactivée
         </th>
         <th></th>
     </tr>
@@ -37,25 +34,23 @@
     {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Categorie.libelle)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.titre)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.nbSlot)
+                @((item.nbSlot - item.nbSlotUtilise))
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.nbSlotUtilise)
+                @Html.CheckBoxFor( modelItem => item.estActive.Value)
             </td>
+            
             <td>
-                @Html.DisplayFor(modelItem => item.estActive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Categorie.libelle)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "EditAnnounce", new { id = item.idAnnonce }) |
+                @*@Html.ActionLink("Edit", "EditAnnounce", new { id = item.idAnnonce }) |*@
                 @*@Html.ActionLink("Details", "Details", new { id=item.idAnnonce }) |*@
                 @Html.ActionLink("Delete", "DeleteAnnounce", new { id = item.idAnnonce })
             </td>

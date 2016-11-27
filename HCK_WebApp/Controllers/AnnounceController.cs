@@ -32,7 +32,7 @@ namespace HCK_WebApp.Controllers
             return View(announceVM);
         }
 
-        public ActionResult GetAllAnnounces(int id = 2)
+        public ActionResult GetAllAnnounces(int id = 1)
         {
             return View(announceBL.GetAllAnnounces(id));
         }
@@ -152,6 +152,11 @@ namespace HCK_WebApp.Controllers
             {
                 return View(pAnnounce);
             }
+        }
+
+        public ActionResult GetAnnouncesTrain()
+        {
+            return View(announceBL.GetTrainAnnounces(1002).ToList());
         }
     }
 }
