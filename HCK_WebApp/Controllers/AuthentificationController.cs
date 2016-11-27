@@ -36,7 +36,7 @@ namespace HCK_WebApp.Controllers
                 Response.Cookies["Hackathon"]["Name"] = user.Profil.prenom;
                 Response.Cookies["Hackathon"].Expires = DateTime.UtcNow.AddDays(14);
 
-                return RedirectToAction("Index", "Post");
+                return RedirectToAction("Index", "Home");
             }
 
             return View(model);
@@ -52,7 +52,7 @@ namespace HCK_WebApp.Controllers
         public ActionResult Register()
         {
             var model = new UserRegisterVM();
-
+            model.dateDeNaissance = DateTime.Now;
             return View(model);
         }
 
@@ -63,7 +63,7 @@ namespace HCK_WebApp.Controllers
 
             if (result)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("LogIn", "Authentification");
             }
 
             return View(model);
