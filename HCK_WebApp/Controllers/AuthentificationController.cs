@@ -9,43 +9,6 @@ using System.Web.Mvc;
 
 namespace HCK_WebApp.Controllers
 {
-    public class AuthentificationController : Controller
-    {
-        private UserBL context;
-
-        public AuthentificationController()
-        {
-            context = new UserBL();
-        }
-
-        public ActionResult LogIn()
-        {
-            var model = new UserLogInVM();
-
-            return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult LogIn(UserLogInVM model)
-        {
-            Utilisateur user = context.LogIn(model.Login, model.Password);
-
-            if (user != null)
-            {
-                Response.Cookies["Hackathon"]["IdUser"] = user.idUtilisateur.ToString();
-                Response.Cookies["Hackathon"]["Name"] = user.Profil.prenom;
-                Response.Cookies["Hackathon"].Expires = DateTime.UtcNow.AddDays(14);
-
-                return RedirectToAction("Index", "Home");
-            }
-
-            return View(model);
-        }
-
-        public ActionResult LogOut()
-        {
-            Response.Cookies["Hackathon"].Expires = DateTime.UtcNow.AddDays(-1);
-
 public class AuthentificationController : Controller
     {
         private UserBL context;
