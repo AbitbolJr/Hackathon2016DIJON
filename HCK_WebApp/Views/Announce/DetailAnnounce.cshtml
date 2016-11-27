@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "Detail annonce";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Détail</h2>
+
+
+    <div class="form-horizontal">
+        <hr />
+        <div class="col-md-12">
+            <div class="form-group">
+                Activitée proposée :
+                <div class="col-md-10">
+                    titre
+                </div>
+            </div>
+
+            <div class="form-group">
+                Nombre de place utilisée :
+                <div class="col-md-10">
+                    3 / 4
+                </div>
+            </div>
+
+            <div class="form-group">
+                Descriptif :
+                <div class="col-md-10">
+                    bla bla
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                Prénom de l'annonceur :
+                <div class="col-md-10">
+                    Filipe
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                Age :
+                <div class="col-md-10">
+                    21 ans
+                </div>
+            </div>
+
+
+            <div class="form-group zoneAction">
+                <div class="floatLeft">
+                    <a><img src="~/Image/add-round-button.png" /></a>
+                    M'inscrire
+                </div>
+                <div class="floatRight">
+                    <a href="/Chat/Conversation"><img src="~/Image/chat.png" /></a>
+                    Contacter
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

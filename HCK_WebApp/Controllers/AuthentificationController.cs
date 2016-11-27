@@ -72,6 +72,11 @@ namespace HCK_WebApp.Controllers
         public ActionResult EditProfil()
         {
             var model = new UserEditProfilVM();
+            model.prenom = "Marie";
+            model.dateDeNaissance = DateTime.Parse("25/12/1988");
+            model.actifPro = false;
+            model.actifLoisir = true;
+            model.descriptionLoisir = "Toujours partante pour une partie de belote.";
 
             return View(model);
         }

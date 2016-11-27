@@ -158,5 +158,18 @@ namespace HCK_WebApp.Controllers
         {
             return View(announceBL.GetTrainAnnounces(1002).ToList());
         }
+
+        public ActionResult RechercheAnnounce()
+        {
+            return View();
+        }
+
+        public ActionResult DetailAnnounce()
+        {
+            return View();
+        }
+
+
+
     }
 }

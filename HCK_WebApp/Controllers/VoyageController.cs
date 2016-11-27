@@ -56,6 +56,16 @@ namespace HCK_WebApp.Controllers
             return View(model);
         }
 
+        public ActionResult GetAllVoyage()
+        {
+            return View();
+        }
+
+        public ActionResult MenuVoyage()
+        {
+            return View();
+        }
+
         //[HttpPost]
         //public ActionResult GetTrainList(GetTrainListVM model)
         //{

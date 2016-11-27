@@ -180,9 +180,14 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Image\add-round-button.png" />
+    <Content Include="Image\annonces.png" />
     <Content Include="Image\cancel-button.png" />
     <Content Include="Image\chat.png" />
     <Content Include="Image\la_vague.png" />
+    <Content Include="Image\LinkedIn_Logo.svg.png" />
+    <Content Include="Image\logo_haute_definition.png" />
+    <Content Include="Image\profil.png" />
+    <Content Include="Image\voyages.png" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -224,6 +229,10 @@
     <Content Include="Views\Announce\GetAllAnnounces.cshtml" />
     <Content Include="Views\Chat\ListMessage.cshtml" />
     <Content Include="Views\Chat\Conversation.cshtml" />
+    <Content Include="Views\Voyage\GetAllVoyage.cshtml" />
+    <Content Include="Views\Voyage\MenuVoyage.cshtml" />
+    <Content Include="Views\Announce\RechercheAnnounce.cshtml" />
+    <Content Include="Views\Announce\DetailAnnounce.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

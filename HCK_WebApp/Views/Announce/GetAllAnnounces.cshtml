@@ -13,9 +13,10 @@
 <div class="form-horizontal">
     <hr />
 
-    <p>
-        @Html.ActionLink("Nouvelle annonce", "AddAnnounce")
+    <p class="zoneAction">
+        <a href="/Announce/AddAnnounce"><img src="~/Image/add-round-button.png" /> Nouvelle annonce</a>
     </p>
+
 
 
     @foreach (var item in Model)

@@ -157,6 +157,17 @@ li:hover
     background-color :#bdc3c7;
 }
 
+.btnRechercheAnnonce
+{
+    background-color :#e67e22;
+}
+
+.btnRecherchePro
+{
+    background-color :#2980b9;
+}
+
+
 
 
 .blockMenu{
@@ -260,9 +271,48 @@ footer{
     font-size:11px;
 }
 
-
 .zoneLigneGlobal img{
     height: 25px;
     margin-top:27px;
 }
+.zoneAction img{
+    height: 25px;
+}
 
+
+.prenomMessage
+{
+    margin: 0;
+}
+
+.textRight
+{
+    text-align:right;
+}
+
+.zoneConversation{
+    background-color: #f5efef;
+    padding: 10px;
+}
+
+
+a{
+    color:black !important;
+}
+
+.navbar-header a,.navbar-collapse a
+{
+    color:white !important;
+
+}
+
+.logo 
+{
+    height: 45px;
+    margin-top: 2px;
+    margin-left: 10px;
+}
+
+.iconMenu{
+    height:30px;
+}
