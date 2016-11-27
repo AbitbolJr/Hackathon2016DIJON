@@ -46,6 +46,43 @@ namespace HCK_WebApp.Controllers
         {
             Response.Cookies["Hackathon"].Expires = DateTime.UtcNow.AddDays(-1);
 
+public class AuthentificationController : Controller
+    {
+        private UserBL context;
+
+        public AuthentificationController()
+        {
+            context = new UserBL();
+        }
+
+        public ActionResult LogIn()
+        {
+            var model = new UserLogInVM();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult LogIn(UserLogInVM model)
+        {
+            Utilisateur user = context.LogIn(model.Login, model.Password);
+
+            if (user != null)
+            {
+                Response.Cookies["Hackathon"]["IdUser"] = user.idUtilisateur.ToString();
+                Response.Cookies["Hackathon"]["Name"] = user.Profil.prenom;
+                Response.Cookies["Hackathon"].Expires = DateTime.UtcNow.AddDays(14);
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View(model);
+        }
+
+        public ActionResult LogOut()
+        {
+            Response.Cookies["Hackathon"].Expires = DateTime.UtcNow.AddDays(-1);
+
             return RedirectToAction("Index", "Home");
         }
 
@@ -71,12 +108,34 @@ namespace HCK_WebApp.Controllers
 
         public ActionResult EditProfil()
         {
-            var model = new UserEditProfilVM();
-            model.prenom = "Marie";
-            model.dateDeNaissance = DateTime.Parse("25/12/1988");
-            model.actifPro = false;
-            model.actifLoisir = true;
-            model.descriptionLoisir = "Toujours partante pour une partie de belote.";
+            //Version statique
+            //var model = new UserEditProfilVM();
+            //model.prenom = "Marie";
+            //model.dateDeNaissance = DateTime.Parse("25/12/1988");
+            //model.actifPro = false;
+            //model.actifLoisir = true;
+            //model.descriptionLoisir = "Toujours partante pour une partie de belote.";
+
+            //return View(model);
+
+            Profil profil = context.GetProfilById(Convert.ToInt32(Request.Cookies["Hackathon"]["IdUser"]));
+
+            Utilisateur user = profil.Utilisateurs.FirstOrDefault(u => u.idProfil == profil.idProfil);
+
+            var model = new UserEditProfilVM()
+            {
+                prenom = profil.prenom,
+                nom = profil.nom,
+                actifLoisir = (bool)profil.actifLoisir,
+                actifPro = (bool)profil.actifPro,
+                adresseMail = user.adresseMail,
+                dateDeNaissance = (DateTime)profil.dateDeNaissance,
+                descriptionLoisir = profil.descriptionLoisir,
+                descriptionPro = profil.descriptionPro,
+                entreprise = profil.entreprise,
+                fonction = profil.fonction,
+                motDePasse = user.motDePasse
+            };
 
             return View(model);
         }
