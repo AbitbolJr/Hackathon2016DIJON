@@ -22,6 +22,8 @@ namespace HCK_WebApp.Controllers
         {
             var model = new AddVoyageVM();
 
+            model.TravelDate = DateTime.Now.Date;
+
             return View(model);
         }
 
@@ -32,16 +34,25 @@ namespace HCK_WebApp.Controllers
 
             try
             {
-                if (model.TravelDate == null)
+                if (model.TrainNumber == 0)
                 {
-                    var result = context.FindTravelsByNumTrain(model.TravelDate, model.TrainNumber);
+                    voyageList = context.FindTravelsByTrainStations(model.StartTrainStation, model.EndTrainStation, model.TravelDate);
                 }
                 else
                 {
-                    var result = context.FindTravelsByNumTrain(model.TravelDate, model.TrainNumber);
+                    voyageList = context.FindTravelsByNumTrain(model.TravelDate, model.TrainNumber);
                 }
 
-                return RedirectToAction("GetTrainList", "Voyage");
+                TempData["voyageList"] = voyageList;
+
+                return RedirectToAction("GetTrainList", new
+                {
+                    pDate = model.TravelDate,
+                    //pDepart = model.StartTrainStation,
+                    //pArrivee = model.EndTrainStation
+                    pDepart = "Dijon",
+                    pArrivee = "Lille"
+                });
             }
             catch (Exception)
             {
@@ -49,27 +60,36 @@ namespace HCK_WebApp.Controllers
             }
         }
 
-        public ActionResult GetTrainList()
+        public ActionResult GetTrainList(DateTime pDate, string pDepart, string pArrivee, List<Voyage> pTrainList)
         {
             var model = new GetTrainListVM();
+
+            model.VoyageFoundList = TempData["voyageList"] as List<Voyage>;
+            model.StartTrainStation = pDepart;
+            model.EndTrainStation = pArrivee;
+            model.TravelDate = pDate;
+
+            TempData["voyageList2"] = model.VoyageFoundList;
 
             return View(model);
         }
 
-        public ActionResult GetAllVoyage()
+        public ActionResult Inscription(int id)
         {
-            return View();
+            List<Voyage> listV = TempData["voyageList2"] as List<Voyage>;
+
+            Voyage v = listV.FirstOrDefault(qsd => qsd.numeroTrain == id);
+
+            context.InscriptionToTrain(
+                Convert.ToInt32(Request.Cookies["Hackathon"]["IdUser"]), v.idVoyage, false, false, 0);
+
+            //TODO Change
+            return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult MenuVoyage()
+        public ActionResult Detail(int id)
         {
-            return View();
+            return RedirectToAction("Index", "Home");
         }
-
-        //[HttpPost]
-        //public ActionResult GetTrainList(GetTrainListVM model)
-        //{
-
-        //}
     }
 }
