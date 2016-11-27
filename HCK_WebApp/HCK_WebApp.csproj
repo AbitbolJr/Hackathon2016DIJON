@@ -167,6 +167,8 @@
     <Compile Include="Models\AddVoyageVM.cs" />
     <Compile Include="Models\AnnounceVM.cs" />
     <Compile Include="Models\GetTrainListVM.cs" />
+    <Compile Include="Models\TrainAnnounceVM.cs" />
+    <Compile Include="Models\TrainProfileVM.cs" />
     <Compile Include="Models\UserEditProfilVM.cs" />
     <Compile Include="Models\UserLogInVM.cs" />
     <Compile Include="Models\UserRegisterVM.cs" />
@@ -183,6 +185,7 @@
     <Content Include="Image\annonces.png" />
     <Content Include="Image\cancel-button.png" />
     <Content Include="Image\chat.png" />
+    <Content Include="Image\final_image_train_haute_defintion.png" />
     <Content Include="Image\la_vague.png" />
     <Content Include="Image\LinkedIn_Logo.svg.png" />
     <Content Include="Image\logo_haute_definition.png" />
@@ -233,6 +236,10 @@
     <Content Include="Views\Voyage\MenuVoyage.cshtml" />
     <Content Include="Views\Announce\RechercheAnnounce.cshtml" />
     <Content Include="Views\Announce\DetailAnnounce.cshtml" />
+    <Content Include="Views\Announce\DetailsAnnounceJob.cshtml" />
+    <Content Include="Views\Announce\DetailsAnnounceTrain.cshtml" />
+    <Content Include="Views\Announce\GetAnnouncesTrain.cshtml" />
+    <Content Include="Views\Announce\GetProfilsTrain.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

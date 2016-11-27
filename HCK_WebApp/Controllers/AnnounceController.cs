@@ -32,9 +32,9 @@ namespace HCK_WebApp.Controllers
             return View(announceVM);
         }
 
-        public ActionResult GetAllAnnounces(int id = 1)
+        public ActionResult GetAllAnnounces()
         {
-            return View(announceBL.GetAllAnnounces(id));
+            return View(announceBL.GetAllAnnounces(Convert.ToInt16(Request.Cookies["Hackathon"]["IdUser"])));
         }
 
         [HttpPost]
@@ -156,8 +156,50 @@ namespace HCK_WebApp.Controllers
 
         public ActionResult GetAnnouncesTrain()
         {
-            return View(announceBL.GetTrainAnnounces(1002).ToList());
+            List<Inscription> lesInscriptions = announceBL.GetTrainAnnounces(4569).ToList();
+            List<TrainAnnounceVM> lesTrainsVM = new List<TrainAnnounceVM>();
+            foreach (Inscription inscription in lesInscriptions)
+            {
+                foreach (Annonce annonce in inscription.Utilisateur.Annonces)
+                {
+                    TrainAnnounceVM trainVM = new TrainAnnounceVM()
+                    {
+                        Activite = annonce.Categorie.libelle,
+                        Descriptif = annonce.description,
+                        NbJoueursManquant = Convert.ToInt16(annonce.nbSlot - annonce.nbSlotUtilise),
+                        NumeroVoiture = Convert.ToInt16(inscription.wagon),
+                        Prenom = inscription.Utilisateur.Profil.prenom,
+                        Theme = annonce.titre,
+                        Age = (DateTime.UtcNow.Year - Convert.ToDateTime(inscription.Utilisateur.Profil.dateDeNaissance).Year),
+                        IdVoyage = inscription.idVoyage
+                    };
+                    lesTrainsVM.Add(trainVM);
+                }
+            }
+            return View(lesTrainsVM);
         }
+
+        public ActionResult DetailsAnnounceTrain(TrainAnnounceVM item)
+        {
+            return View(item);
+        }
+
+        public ActionResult InscriptionToTraject(TrainAnnounceVM Model)
+        {
+            Inscription anInscription = new Inscription()
+            {
+                estHebdomadaire = false,
+                estQuotidien = false,
+                idUtilisateur = Convert.ToInt16(Request.Cookies["Hackathon"]["IdUser"]),
+                idVoyage = Model.IdVoyage,
+                wagon = Model.NumeroVoiture
+            };
+
+            //Mettre méthode SZARY
+
+            return View(Model);
+        }
+
 
         public ActionResult RechercheAnnounce()
         {
@@ -167,6 +209,44 @@ namespace HCK_WebApp.Controllers
         public ActionResult DetailAnnounce()
         {
             return View();
+        }
+
+        public ActionResult GetProfilsTrain()
+        {
+            List<Inscription> lesInscriptions = announceBL.GetTrainAnnounces(4569).ToList();
+            List<TrainProfileVM> lesTrainsVM = new List<TrainProfileVM>();
+            foreach (Inscription inscription in lesInscriptions)
+            {
+                if (Convert.ToBoolean(inscription.Utilisateur.Profil.actifPro))
+                {
+                    TrainProfileVM trainVM = new TrainProfileVM()
+                    {
+                        Enterprise = inscription.Utilisateur.Profil.entreprise,
+                        Fonction = inscription.Utilisateur.Profil.fonction,
+                        Name = inscription.Utilisateur.Profil.prenom,
+                        Wagon = Convert.ToInt16(inscription.wagon),
+                        IdUtilisateur = inscription.idUtilisateur
+                    };
+                    lesTrainsVM.Add(trainVM);
+                }
+            }
+            return View(lesTrainsVM);
+        }
+
+        
+
+
+
+
+
+
+
+
+
+
+        public ActionResult DetailsAnnounceJob(TrainProfileVM item)
+        {
+            return View(item);
         }
 
 

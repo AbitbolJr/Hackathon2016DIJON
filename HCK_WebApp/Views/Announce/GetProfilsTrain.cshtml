@@ -1,0 +1,47 @@
+﻿@model IEnumerable<HCK_WebApp.Models.TrainProfileVM>
+
+@{
+    ViewBag.Title = "GetProfilsTrain";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GetProfilsTrain</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Nom
+        </th>
+        <th>
+            Entreprise
+        </th>
+        <th>
+            Fonction
+        </th>
+        <th>
+            N° voiture
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Enterprise)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fonction)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Wagon)
+        </td>
+        <td>
+            @Html.ActionLink("M'inscrire", "DetailsAnnounceJob", "Announce", item, null)
+        </td>
+    </tr>
+}
+</table>

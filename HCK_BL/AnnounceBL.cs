@@ -99,13 +99,11 @@ namespace HCK_BL
             }
             return userAnnounce;
         }
-
-        public List<Annonce> GetTrainAnnounces(int pTrainId = 1002)
+        public List<Inscription> GetTrainAnnounces(int pTrainId)
         {
             Voyage leVoyage = context.GetAll<Voyage>().FirstOrDefault(v => v.numeroTrain == pTrainId);
-            List<Inscription> lesInscriptions = context.GetAll<Inscription>().Where(i => i.idVoyage == leVoyage.idVoyage).ToList();
-            List<Utilisateur> lesUtilisateurs = context.GetAll<Utilisateur>().Where(u => lesInscriptions.Any(i => i.idUtilisateur == u.idUtilisateur)).ToList();
-            return lesUtilisateurs.SelectMany(u => u.Annonces).ToList();
+            List<Inscription> lesInscriptions = context.GetAll<Inscription>().ToList().Where(i => i.idVoyage == leVoyage.idVoyage).ToList();
+            return lesInscriptions;
         }
     }
 }

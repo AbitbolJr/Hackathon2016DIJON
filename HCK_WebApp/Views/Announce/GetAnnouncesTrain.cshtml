@@ -1,0 +1,45 @@
+﻿@model IEnumerable<HCK_WebApp.Models.TrainAnnounceVM>
+
+@{
+    ViewBag.Title = "GetAnnouncesTrain";
+}
+
+<h2>Les annonces</h2>
+
+<div class="form-horizontal">
+    <hr />
+
+    <div class="form-group">
+        <div class="col-md-12 ladivtrain">
+            <img class="imgTrain" src="~/Image/final_image_train_haute_defintion.png" />
+        </div>
+    </div>
+
+    <hr />
+    <div class="form-group">
+        <div class="col-md-12">
+            <input class="form-control text-box single-line" id="keyword" name="keyword" placeholder="Mots clés" type="text" value="">
+        </div>
+    </div>
+
+    @foreach (var item in Model)
+    {
+        <div class="form-group zoneLigneGlobal">
+            <a href="@Url.Action("DetailsAnnounceTrain", "Announce", item,null)">
+                <div class="col-xs-12">
+                    <div class="zoneConversation">
+                        <div>
+                            <span class="grandZoneLigne">  @item.Theme</span>
+                            <span class="floatRight petitZoneLigne">  Categorie : @item.Activite</span>
+
+                        </div>
+                        <div>
+                            <span class="petitZoneLigne">  Nombre de slot restant : @item.NbJoueursManquant</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+
+</div>
